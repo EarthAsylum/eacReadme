@@ -12,7 +12,7 @@ License:            GPLv3 or later
 License URI:        https://www.gnu.org/licenses/gpl.html  
 Tags:               readme, parser, markdown, parsedown, {eac}Doojigger, post from readme, code highlighting, readme.txt, shortcode  
 WordPress URI:		https://wordpress.org/plugins/eacreadme  
-**Requires:			[{eac}Doojigger](https://eacDoojigger.earthasylum.com/)**
+**Required Plugins:	[{eac}Doojigger](https://eacDoojigger.earthasylum.com/)**
 
 **_{eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks._**
 
