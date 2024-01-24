@@ -156,7 +156,7 @@ Once installed and activated options for this extension will show in the 'Genera
 
 == Copyright ==
 
-= Copyright © 2019-2023, EarthAsylum Consulting, distributed under the terms of the GNU GPL. =
+= Copyright © 2019-2024, EarthAsylum Consulting, distributed under the terms of the GNU GPL. =
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -196,8 +196,6 @@ You should receive a copy of the GNU General Public License along with this prog
 
 +	Correctly load inline style using wp_add_inline_style()
 +	Tested with WordPress 6.2 and {eac}Doojigger 2.2.
-
-+	Updated to / Requires {eac}Doojigger 2.0.
 
 = Version 1.2.0 – November 16, 2022 =
 
