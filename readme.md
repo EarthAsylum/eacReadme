@@ -1,5 +1,7 @@
 # {eac}Doojigger Readme Extension for WordPress  
-[![EarthAsylum Consulting](https://img.shields.io/badge/EarthAsylum-Consulting-0?&labelColor=6e9882&color=707070)](https://earthasylum.com/) [![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)  
+[![EarthAsylum Consulting](https://img.shields.io/badge/EarthAsylum-Consulting-0?&labelColor=6e9882&color=707070)](https://earthasylum.com/)
+[![WordPress](https://img.shields.io/badge/WordPress-Plugins-grey?logo=wordpress&labelColor=blue)](https://wordpress.org/plugins/search/EarthAsylum/)
+[![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)  
 <details><summary>Plugin Header</summary><samp><small>
 
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
@@ -158,110 +160,3 @@ Once installed and activated options for this extension will show in the 'Genera
 +   {eac}Readme uses [Prism syntax highlighter](https://prismjs.com/), Copyright (c) 2012 Lea Verou
 
 
-## Copyright
-
-#### Copyright © 2019-2024, EarthAsylum Consulting, distributed under the terms of the GNU GPL.
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.  
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should receive a copy of the GNU General Public License along with this program. If not, see [https://www.gnu.org/licenses/](https://www.gnu.org/licenses/).
-
-
-## Changelog
-
-#### Version 1.2.6 – January 24, 2024
-
-+	Fixed "preg_match(): Passing null" notice
-
-#### Version 1.2.5 – December 8, 2023
-
-+	Fixed caching (yet again) by adding current file name to cache key.
-	+	subsequent segments could load the wrong cache key when no file given.
-
-#### Version 1.2.4 – December 4, 2023
-
-+	Added button to flush group cache when using drop-in object cache.
-+	Added use of 'EAC_README_CACHE_LIFETIME' constant to set cache life-time (default = 1 day).
-	+	 In wp-config.php: `define('EAC_README_CACHE_LIFETIME',3600);`
-+	md5() cache key name.
-
-#### Version 1.2.3 – August 30, 2023
-
-+	Improved caching.
-
-#### Version 1.2.2 – June 6, 2023
-
-+	Removed unnecessary plugin_update_notice trait.
-+	Cosmetic changes to option & help titles.
-
-#### Version 1.2.1 – April 22, 2023
-
-+	Correctly load inline style using wp_add_inline_style()
-+	Tested with WordPress 6.2 and {eac}Doojigger 2.2.
-
-#### Version 1.2.0 – November 16, 2022
-
-+	Updated to / Requires {eac}Doojigger 2.0.
-+	Uses 'options_settings_page' action to register options.
-+	Added contextual help using 'options_settings_help' action.
-+	Renamed extension file(s) and vendor directory.
-+	Changed tab name in registerExtension (must be -re-enabled in admin).
-+	Moved plugin_action_links hook to eacDoojigger_load_extensions filter.
-+	Added use of WP_Object_Cache.
-+	Fixed problem with admin page reload when changing style.
-
-#### Version 1.1.1 – September 25, 2022
-
-+	Fixed potential PHP notice on load (plugin_action_links_).
-+   Added upgrade notice trait for plugins page.
-+	Added tagify option: getTags(true) when processing tags to convert to array [slug=>tag]
-
-#### Version 1.1.0 – September 7, 2022
-
-+	Added ability to get the full file contents as a code block (Code File).
-+	Renamed include file eacParseReadme.php to class.readme_parser.php.
-
-#### Version 1.0.7 – August 28, 2022
-
-+	Updated to / Requires {eac}Doojigger 1.2
-+	Added 'Settings', 'Docs' and 'Support' links on plugins page.
-+   Fixed admin display error (section not found).
-
-#### Version 1.0.6 – July 12, 2022
-
-+   Get contributor profile when getting all headers.
-+	Move short description before headers in getDocument().
-
-#### Version 1.0.5 – June 22, 2022
-
-+   Added "{plugin}_eacReadme" filter.
-+   Added title attribute to nav links.
-
-#### Version 1.0.4 – June 9, 2022
-
-+   Updated for {eac}Doojigger 1.1.0
-
-#### Version 1.0.3 – May 12, 2022
-
-+   Added transient caching of contributor profiles.
-
-#### Version 1.0.2 – May 10, 2022
-
-+   Added section name translation.
-
-#### Version 1.0.1 – April 28, 2022
-
-+   Minor changes / enhancements.
-
-#### Version 1.0.0 – February 26, 2022
-
-+   Initial release.
-
-
-## Upgrade Notice
-
-#### 1.2.0
-
-Requires {eac}Doojigger version 2.0+
