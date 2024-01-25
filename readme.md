@@ -1,4 +1,5 @@
-## {eac}Doojigger Readme Extension for WordPress
+## {eac}Doojigger Readme Extension for WordPress  
+[![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)  
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
 Stable tag:         1.2.6  
@@ -12,7 +13,6 @@ License:            GPLv3 or later
 License URI:        https://www.gnu.org/licenses/gpl.html  
 Tags:               readme, parser, markdown, parsedown, {eac}Doojigger, post from readme, code highlighting, readme.txt, shortcode  
 WordPress URI:		https://wordpress.org/plugins/eacreadme  
-**Required Plugins:	[{eac}Doojigger](https://eacDoojigger.earthasylum.com/)**
 
 **_{eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks._**
 
