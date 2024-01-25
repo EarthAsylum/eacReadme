@@ -1,5 +1,7 @@
-## {eac}Doojigger Readme Extension for WordPress  
-[![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)  
+# {eac}Doojigger Readme Extension for WordPress  
+## [![EarthAsylum Consulting](https://img.shields.io/badge/EarthAsylum-Consulting-0?&labelColor=6e9882&color=707070)](https://earthasylum.com/) [![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)  
+<details><summary>Plugin Header</summary>
+
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
 Stable tag:         1.2.6  
@@ -13,10 +15,11 @@ License:            GPLv3 or later
 License URI:        https://www.gnu.org/licenses/gpl.html  
 Tags:               readme, parser, markdown, parsedown, {eac}Doojigger, post from readme, code highlighting, readme.txt, shortcode  
 WordPress URI:		https://wordpress.org/plugins/eacreadme  
+</details>
 
 **_{eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks._**
 
-### Description
+## Description
 
 _{eac}Readme_ is an [{eac}Doojigger](https://eacDoojigger.earthasylum.com/) extension which loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks.
 
@@ -113,7 +116,7 @@ Default translation table
         'Screenshots'           => 'Screen Shots',
     ];
 
-### Installation
+## Installation
 
 **{eac}Doojigger Readme Extension** is an extension plugin to and requires installation and registration of [{eac}Doojigger](https://eacDoojigger.earthasylum.com/).
 
@@ -140,13 +143,13 @@ See [Managing Plugins -> Manual Plugin Installation](https://wordpress.org/suppo
 Once installed and activated options for this extension will show in the 'General' tab of {eac}Doojigger settings.
 
 
-### Screenshots
+## Screenshots
 
 1. Readme Extension
 ![{eac}Readme Extension](https://ps.w.org/eacreadme/assets/screenshot-1.png)
 
 
-### Other Notes
+## Other Notes
 
 #### Additional Information
 
@@ -155,7 +158,7 @@ Once installed and activated options for this extension will show in the 'Genera
 +   {eac}Readme uses [Prism syntax highlighter](https://prismjs.com/), Copyright (c) 2012 Lea Verou
 
 
-### Copyright
+## Copyright
 
 #### Copyright © 2019-2024, EarthAsylum Consulting, distributed under the terms of the GNU GPL.
 
@@ -166,7 +169,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should receive a copy of the GNU General Public License along with this program. If not, see [https://www.gnu.org/licenses/](https://www.gnu.org/licenses/).
 
 
-### Changelog
+## Changelog
 
 #### Version 1.2.6 – January 24, 2024
 
@@ -257,7 +260,7 @@ You should receive a copy of the GNU General Public License along with this prog
 +   Initial release.
 
 
-### Upgrade Notice
+## Upgrade Notice
 
 #### 1.2.0
 
