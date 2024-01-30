@@ -9,7 +9,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 	 * @category	WordPress Plugin
 	 * @package 	{eac}Readme\{eac}Doojigger Extensions
 	 * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
-	 * @copyright	Copyright (c) 2023 EarthAsylum Consulting <www.EarthAsylum.com>
+	 * @copyright	Copyright (c) 2024 EarthAsylum Consulting <www.EarthAsylum.com>
 	 * @version		1.x
 	 * @link		https://eacDoojigger.earthasylum.com/
 	 * @see 		https://eacDoojigger.earthasylum.com/phpdoc/
@@ -24,7 +24,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 		/**
 		 * @var string extension version
 		 */
-		const VERSION	= '23.1208.1';
+		const VERSION	= '24.0130.1';
 
 		/**
 		 * cache lifetime in seconds
@@ -218,9 +218,13 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 				'content' 		=> '',		// relative to WP_CONTENT_DIR
 				'plugin' 		=> '',		// relative to WP_PLUGIN_DIR
 				'theme' 		=> '',		// relative to get_theme_root
+				'wpsvn' 		=> '',		// retrieve from WP svn
+				'github' 		=> '',		// retrieve from github
+				'token' 		=> null,	// access token (github)
 				'parse' 		=> null,	// boolean option
 				'translate' 	=> null,	// translate section names
 				'lang' 			=> $this->get_option('readme_code_language'),
+				'ttl'			=> $this->cache_lifetime,
 			], $atts, $tag );
 
 			$parse_file = '';					// file name to be loaded/parsed
@@ -240,6 +244,32 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 			else if ($a['theme'])
 			{
 				$parse_file = $current_file = get_theme_root() .'/'. ltrim($a['theme'],'/');
+			}
+			else if ($a['wpsvn'])
+			{
+				// /eacreadme/trunk/readme.txt
+				$wpsvn = 'https://plugins.svn.wordpress.org/';
+				$parse_file = $current_file = $wpsvn . ltrim(str_replace(
+					[ 'https://', 'http://', 'plugins.svn.wordpress.org' ],
+					'',
+					$a['wpsvn']
+				),'/');
+				// https://plugins.svn.wordpress.org/eacreadme/trunk/readme.txt
+			}
+			else if ($a['github'])
+			{
+				// /KBurkholder/eacReadme/main/readme.txt
+				$github = 'https://raw.githubusercontent.com/';
+				$parse_file = $current_file = $github . ltrim(str_replace(
+					[ 'https://', 'http://', 'raw.githubusercontent.com','github.com', '/blob' ],
+					'',
+					$a['github']
+				),'/');
+				// https://raw.githubusercontent.com/KBurkholder/eacReadme/main/readme.txt
+				$token = $a['token'] ?: (defined( 'GITHUB_ACCESS_TOKEN' ) ? GITHUB_ACCESS_TOKEN : null);
+				if ($token) {
+			        $parse_file = $current_file = add_query_arg( 'access_token', $token, $parse_file );
+				}
 			}
 			else
 			{
@@ -304,7 +334,8 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 				 */
 				$result = $this->apply_filters('eacReadme',$result);
 
-				wp_cache_set($cacheKey,$result,$this->className,$this->cache_lifetime);
+				$ttl = max(intval($a['ttl']),MINUTE_IN_SECONDS);
+				wp_cache_set($cacheKey,$result,$this->className,$ttl);
 				return $result;
 			}
 		}

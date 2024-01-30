@@ -1,13 +1,14 @@
 # {eac}Doojigger Readme Extension for WordPress  
 [![EarthAsylum Consulting](https://img.shields.io/badge/EarthAsylum-Consulting-0?&labelColor=6e9882&color=707070)](https://earthasylum.com/)
 [![WordPress](https://img.shields.io/badge/WordPress-Plugins-grey?logo=wordpress&labelColor=blue)](https://wordpress.org/plugins/search/EarthAsylum/)
-[![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)  
-<details><summary>Plugin Header</summary><samp><small>
+[![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)
+
+<details><summary>Plugin Header</summary><samp>
 
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
-Stable tag:         1.2.6  
-Last Updated:       24-Jan-2024  
+Stable tag:         1.3.0  
+Last Updated:       30-Jan-2024  
 Requires at least:  5.5.0  
 Tested up to:       6.4  
 Requires PHP:       7.2  
@@ -15,9 +16,10 @@ Requires EAC:       2.0
 Contributors:       [kevinburkholder](https://profiles.wordpress.org/kevinburkholder)  
 License:            GPLv3 or later  
 License URI:        https://www.gnu.org/licenses/gpl.html  
-Tags:               readme, parser, markdown, parsedown, {eac}Doojigger, post from readme, code highlighting, readme.txt, shortcode  
+Tags:               readme, markdown, parsedown, {eac}Doojigger, code-highlighting, github, svn  
 WordPress URI:		https://wordpress.org/plugins/eacreadme  
-</small></samp></details>
+GitHub URI:			https://github.com/KBurkholder/eacReadme  
+</samp></details>
 
 **_{eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks._**
 
@@ -33,6 +35,8 @@ The first used shortcode must indicate the file to load...
     [eacReadme content='/contentfolder/readme.txt'] # content file is relative to the WordPress content folder (wp-content/)
     [eacReadme plugin='/pluginfolder/readme.txt']   # plugin file is relative to the WordPress plugins folder (wp-content/plugins/)
     [eacReadme theme='/themefolder/readme.txt']     # theme file is relative to the WordPress themes folder (wp-content/themes/)
+    [eacReadme wpsvn='/slugname/trunk/readme.txt']  # load file from WordPress SVN repository
+    [eacReadme github='/username/repository/main/readme.txt']        # load file from github repository
 
 After which, headers and sections may be pulled from that file...
 
@@ -83,6 +87,22 @@ Get a file as a code block...
 	[eacReadme theme='/my-child-theme/style.css' lang='css']Code File[/eacReadme]
 
 #### Other Options
+
+Change the default cache time-to-live by adding to wp-config.php:
+
+	define('EAC_README_CACHE_LIFETIME',$seconds);	# default: 1-day (DAY_IN_SECONDS).
+
+Override the default cache time-to-live
+
+    [eacReadme ttl=$seconds ...]					# minimum: 1-minute (MINUTE_IN_SECONDS).
+
+Set the default GitHub access token (for private repositories):
+
+	define('GITHUB_ACCESS_TOKEN',$token);
+
+Set/override the GitHub access token
+
+    [eacReadme token=$token ...]
 
 Override option to parse markdown when retrieving a segment
 

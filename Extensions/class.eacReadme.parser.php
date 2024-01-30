@@ -6,7 +6,7 @@
  *
  * @category	WordPress Plugin
  * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
- * @copyright	Copyright (c) 2022 EarthAsylum Consulting <www.earthasylum.com>
+ * @copyright	Copyright (c) 2024 EarthAsylum Consulting <www.earthasylum.com>
  * @version		1.x
  * @see 		https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/
  * @uses		Parsedown 1.7.4, Copyright (c) 2013-2018 Emanuil Rusev, erusev.com
@@ -226,8 +226,19 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function loadFile(string $filePath): bool
 		{
-			if (! self::$content = @file_get_contents($filePath)) {
-				return false;
+			if (substr($filePath,0,4) == 'http')
+			{
+				$request = wp_safe_remote_get($filePath);
+				if ( is_wp_error($request) ) {
+					return false;
+				}
+				self::$content = wp_remote_retrieve_body($request);
+			}
+			else
+			{
+				if (! self::$content = @file_get_contents($filePath)) {
+					return false;
+				}
 			}
 			self::$content .= "\n== [###]\n";
 			self::$headers 	= null;
@@ -239,7 +250,7 @@ if (! class_exists('eacParseReadme',false))
 		/**
 		 * Parse markdown text block
 		 *
-		 * @param string 	$taxt - segment text to parse
+		 * @param string 	$text - segment text to parse
 		 * @return string	parsed text
 		 */
 		public static function parseMarkdownText(string $text): string
