@@ -188,7 +188,8 @@ You should receive a copy of the GNU General Public License along with this prog
 
 = Version 1.3.1 – February 1, 2024 =
 
-+	Added context to file access for github authentication.
++	Added context to file access for github authentication & WP headers.
++	Changed WordPress uri (https://ps.w.org/)
 
 = Version 1.3.0 – January 31, 2024 =
 
