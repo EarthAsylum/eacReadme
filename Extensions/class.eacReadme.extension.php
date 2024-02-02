@@ -24,7 +24,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 		/**
 		 * @var string extension version
 		 */
-		const VERSION	= '24.0130.1';
+		const VERSION	= '24.0201.1';
 
 		/**
 		 * cache lifetime in seconds
@@ -228,6 +228,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 			], $atts, $tag );
 
 			$parse_file = '';					// file name to be loaded/parsed
+			$file_context = null;				// file_get_context context
 
 			if ($a['file'])
 			{
@@ -248,13 +249,20 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 			else if ($a['wpsvn'])
 			{
 				// /eacreadme/trunk/readme.txt
-				$wpsvn = 'https://plugins.svn.wordpress.org/';
+				$wpsvn = 'https://ps.w.org/';
 				$parse_file = $current_file = $wpsvn . ltrim(str_replace(
-					[ 'https://', 'http://', 'plugins.svn.wordpress.org' ],
+					[ 'https://', 'http://', 'plugins.svn.wordpress.org', 'ps.w.org' ],
 					'',
 					$a['wpsvn']
 				),'/');
 				// https://plugins.svn.wordpress.org/eacreadme/trunk/readme.txt
+				$file_context = stream_context_create(array(
+					'http'	=> array(
+						'method'	=> 	"GET",
+						'header'	=> 	"Accept: text/plain\r\n".
+										"user-agent: ".filter_input(INPUT_SERVER,'HTTP_USER_AGENT',FILTER_SANITIZE_STRING),
+					)
+				));
 			}
 			else if ($a['github'])
 			{
@@ -268,7 +276,13 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 				// https://raw.githubusercontent.com/KBurkholder/eacReadme/main/readme.txt
 				$token = $a['token'] ?: (defined( 'GITHUB_ACCESS_TOKEN' ) ? GITHUB_ACCESS_TOKEN : null);
 				if ($token) {
-			        $parse_file = $current_file = add_query_arg( 'access_token', $token, $parse_file );
+			    //    $parse_file = $current_file = add_query_arg( 'access_token',  , $parse_file );
+			        $file_context = stream_context_create(array(
+						'http'	=> array(
+							'method'	=> "GET",
+							'header'	=> "Authorization: Token {$token}\r\n",
+						)
+					));
 				}
 			}
 			else
@@ -294,7 +308,8 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 
 			if ($parse_file)
 			{
-				\eacParseReadme::loadFile($parse_file);
+			echo "<p>{$parse_file}</p>\n";
+				\eacParseReadme::loadFile($parse_file,$file_context);
 			}
 
 			if (!is_null($a['parse']))

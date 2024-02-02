@@ -1,8 +1,8 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.3.0
-Last Updated:       30-Jan-2024
+Stable tag:         1.3.1
+Last Updated:       01-Feb-2024
 Requires at least:  5.5.0
 Tested up to:       6.4
 Requires PHP:       7.2
@@ -186,7 +186,11 @@ You should receive a copy of the GNU General Public License along with this prog
 
 == Changelog ==
 
-= Version 1.3.0 – January 30, 2024 =
+= Version 1.3.1 – February 1, 2024 =
+
++	Added context to file access for github authentication.
+
+= Version 1.3.0 – January 31, 2024 =
 
 +	Added 'ttl' option to shortcode to set cache time-to-live (min 1 minute).
 +	Added WP SVN support:

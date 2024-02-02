@@ -222,23 +222,13 @@ if (! class_exists('eacParseReadme',false))
 		 * Load file and initialize parser
 		 *
 		 * @param string 	$filePath - path to readme.txt
+		 * @param resource 	$file_context stream_context_create() if needed
 		 * @return bool
 		 */
-		public static function loadFile(string $filePath): bool
+		public static function loadFile(string $filePath, $file_context = null): bool
 		{
-			if (substr($filePath,0,4) == 'http')
-			{
-				$request = wp_safe_remote_get($filePath);
-				if ( is_wp_error($request) ) {
-					return false;
-				}
-				self::$content = wp_remote_retrieve_body($request);
-			}
-			else
-			{
-				if (! self::$content = @file_get_contents($filePath)) {
-					return false;
-				}
+			if (! self::$content = file_get_contents($filePath,false,$file_context)) {
+				return false;
 			}
 			self::$content .= "\n== [###]\n";
 			self::$headers 	= null;
