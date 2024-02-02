@@ -24,7 +24,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 		/**
 		 * @var string extension version
 		 */
-		const VERSION	= '24.0201.1';
+		const VERSION	= '24.0202.1';
 
 		/**
 		 * cache lifetime in seconds
@@ -308,7 +308,6 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 
 			if ($parse_file)
 			{
-			echo "<p>{$parse_file}</p>\n";
 				\eacParseReadme::loadFile($parse_file,$file_context);
 			}
 

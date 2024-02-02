@@ -2,7 +2,7 @@
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
 Stable tag:         1.3.1
-Last Updated:       01-Feb-2024
+Last Updated:       02-Feb-2024
 Requires at least:  5.5.0
 Tested up to:       6.4
 Requires PHP:       7.2
@@ -186,7 +186,7 @@ You should receive a copy of the GNU General Public License along with this prog
 
 == Changelog ==
 
-= Version 1.3.1 – February 1, 2024 =
+= Version 1.3.1 – February 2, 2024 =
 
 +	Added context to file access for github authentication & WP headers.
 +	Changed WordPress uri (https://ps.w.org/)
