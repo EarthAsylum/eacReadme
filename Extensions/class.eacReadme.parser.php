@@ -539,7 +539,7 @@ if (! class_exists('eacParseReadme',false))
 		 * Get pre-defined segment - tags header
 		 *
 		 * @param bool 		$tagify return tags array [tag-slug=>tag]
-		 * @return array|string	requested segment or empty string
+		 * @return array|string	requested segment or empty
 		 */
 		public static function getTags(bool $tagify = false)
 		{
@@ -557,7 +557,7 @@ if (! class_exists('eacParseReadme',false))
 			{
 				$slug = str_replace([' ','_','.'],'-',strtolower(trim($tag)));
 				$slug = preg_replace('/[^a-z0-9_\-]/','',$slug);
-				$tagArray[$slug] = $tag;
+				$tagArray[$slug] = trim($tag);
 			}
 			return $tagArray;
 		}
@@ -585,7 +585,7 @@ if (! class_exists('eacParseReadme',false))
 
 			foreach ($contributors as $contributor)
 			{
-				$contributor = trim($contributor);
+				$contributor = strtolower(trim($contributor));
 /* 				if (! $forPluginAPI)
 				{
 					$profiles[] = self::parseMarkdownLine($contributor);
@@ -626,10 +626,30 @@ if (! class_exists('eacParseReadme',false))
 				}
 				else
 				//  profile link only - email address (gravatar) or profile name (WordPress)
+				// 		or <profile>@wordpress|gravatar|github
 				{
 					if (strpos($contributor, '@')) 	// email address
 					{
-						$profiles = array_merge($profiles,self::_getGravatarProfile(md5($contributor),$contributor));
+						if (preg_match('/^(.*)@(wordpress|gravatar|github)$/', $contributor, $matches))
+						{
+							$profile_id = $matches[1];
+							switch ($matches[2])
+							{
+								case 'wordpress': 	// <profileid>@wordpress
+									$profiles = array_merge($profiles,self::_getWordpressProfile($profile_id,$profile_id));
+									break;
+								case 'gravatar': 	// <profileid>@gravatar
+									$profiles = array_merge($profiles,self::_getGravatarProfile($profile_id,$profile_id));
+									break;
+								case 'github': 		// <profileid>@github
+									$profiles = array_merge($profiles,self::_getGithubProfile($profile_id));
+									break;
+							}
+						}
+						else
+						{
+							$profiles = array_merge($profiles,self::_getGravatarProfile(md5($contributor),$contributor));
+						}
 					}
 					else							// profile name
 					{
@@ -670,7 +690,8 @@ if (! class_exists('eacParseReadme',false))
 				return $content;
 			}
 			// use gravatar profile api in PHP serialized format
-			if ( ($content = @file_get_contents('https://secure.gravatar.com/'.$profile.'.php')) && ($content = unserialize($content)) )
+			if ( ($content = @file_get_contents('https://secure.gravatar.com/'.$profile.'.php'))
+			&&   ($content = unserialize($content)) )
 			{
 				$content = [$content['entry'][0]['preferredUsername'] => [
 						'display_name'	=> $displayName ?: $content['entry'][0]['displayName'],
@@ -686,6 +707,49 @@ if (! class_exists('eacParseReadme',false))
 			if (!$displayName) list($displayName) = explode('@',$textProfile);
 			return [$textProfile => [
 					'display_name'	=> $displayName,
+					'avatar'		=> "https://secure.gravatar.com/avatar/?d=mp"
+			]];
+		}
+
+
+		/*
+		 * Get Github profile
+		 *
+		 * @param string 	$profile - the profile name (may be md5()'d)
+		 * @param string 	$displayName - display name (if provided)
+		 * @return array	profile content
+		 */
+		private static function _getGithubProfile(string $profile, string $displayName=null): array
+		{
+			$profile = rtrim($profile,'/');
+			// if we're in WordPress, use transient
+			if (function_exists('\get_transient') && ($content = \get_transient("eacReadme_profile_{$profile}"))) {
+				return $content;
+			}
+			$context = stream_context_create(array(
+				'http'	=> array(
+					'method'	=> 	"GET",
+					'header'	=> 	"Accept: application/vnd.github+json, application/json\r\n".
+									"X-GitHub-Api-Version: 2022-11-28\r\n".
+									"User-Agent: ".$_SERVER['HTTP_USER_AGENT']."\r\n",
+				)
+			));
+			if ( ($content = @file_get_contents('https://api.github.com/users/'.$profile,false,$context))
+			&&   ($content = json_decode($content)) )
+			{
+				$content = [$content->login => [
+						'display_name'	=> $content->name,
+						'profile'		=> $content->html_url,
+						'avatar'		=> $content->avatar_url
+				]];
+				if (function_exists('\set_transient')) {
+					\set_transient("eacReadme_profile_{$profile}",$content,DAY_IN_SECONDS);
+				}
+				return $content;
+			}
+			// no matching profile
+			return [$profile => [
+					'display_name'	=> $displayName ?: $profile,
 					'avatar'		=> "https://secure.gravatar.com/avatar/?d=mp"
 			]];
 		}

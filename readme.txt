@@ -1,11 +1,11 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.3.1
-Last Updated:       02-Feb-2024
+Stable tag:         1.4.0
+Last Updated:       09-Feb-2024
 Requires at least:  5.5.0
 Tested up to:       6.4
-Requires PHP:       7.2
+Requires PHP:       7.4
 Requires EAC:       2.0
 Contributors:       kevinburkholder
 License:            GPLv3 or later
@@ -131,6 +131,37 @@ Default translation table
         'Screenshots'           => 'Screen Shots',
     ];
 
+= Readme Format =
+
+{eac}Readme expects a well-formed readme.txt file that follows the [WordPress readme file standard](https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works)...
+
+...but supports some extensions to that standard:
+
++	Author & Author URI
+	+	`Author` header may be a simple name or a markdown link:
+		+	`[Author](Author URI)`.
+	+	The `Author` & `Author URI` headers, if present, are combined as a markdown [Author](Author URI).
++	Homepage
+	+	Looks for `Homepage` or `Plugin URI`.
++	Version
+	+	Looks for `Version` or `Stable tag`.
++	Contributors
+	+ 	`profileId` - wordpress profile
+	+ 	`profileId@yourdomain.com` - gravatar profile
+	+ 	`profileId@wordpress` - wordpress profile
+	+ 	`profileId@gravatar` - gravatar profile
+	+ 	`profileId@github` - github profile
+	+	`[display name](mailto:email@address.com)` or `[display name](http://www.gravatar.com/profileId/)`
+	+	`[display name](http://profiles.wordpress.org/profileId/)`
+	+	`[your name](your/profile/url)`
+
+= WordPress Actions =
+
+3rd-party actors may load and use the parser class included in {eac}Readme...
+
+		do_action('eacReadme_load_parser'); 	// loads \eacParseReadme static class
+
+
 == Installation ==
 
 **{eac}Doojigger Readme Extension** is an extension plugin to and requires installation and registration of [{eac}Doojigger](https://eacDoojigger.earthasylum.com/).
@@ -186,10 +217,14 @@ You should receive a copy of the GNU General Public License along with this prog
 
 == Changelog ==
 
-= Version 1.3.1 – February 2, 2024 =
+= Version 1.4.0 – February 9, 2024 =
 
++	Added github profile support along with optional profile formats for contributors.
++	Trim tags when tagifying from header.
++	Added new action, 'eacReadme_load_parser', to allow 3rd-party apps to use the parser class.
+	+ 	`do_action('eacReadme_load_parser'); // loads \eacParseReadme static class`
 +	Added context to file access for github authentication & WP headers.
-+	Changed WordPress uri (https://ps.w.org/)
++	Changed WordPress svn uri (https://ps.w.org/)
 
 = Version 1.3.0 – January 31, 2024 =
 
