@@ -1,8 +1,7 @@
-# {eac}Doojigger Readme Extension for WordPress  
+## {eac}Doojigger Readme Extension for WordPress  
 [![EarthAsylum Consulting](https://img.shields.io/badge/EarthAsylum-Consulting-0?&labelColor=6e9882&color=707070)](https://earthasylum.com/)
 [![WordPress](https://img.shields.io/badge/WordPress-Plugins-grey?logo=wordpress&labelColor=blue)](https://wordpress.org/plugins/search/EarthAsylum/)
 [![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)
-
 <details><summary>Plugin Header</summary><samp>
 
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
@@ -17,13 +16,14 @@ Contributors:       [kevinburkholder](https://profiles.wordpress.org/kevinburkho
 License:            GPLv3 or later  
 License URI:        https://www.gnu.org/licenses/gpl.html  
 Tags:               readme, markdown, parsedown, {eac}Doojigger, code-highlighting, github, svn  
-WordPress URI:		https://wordpress.org/plugins/eacreadme  
-GitHub URI:			https://github.com/EarthAsylum/eacReadme  
+WordPress URI:      https://wordpress.org/plugins/eacreadme  
+GitHub URI:         https://github.com/EarthAsylum/eacReadme  
+
 </samp></details>
 
-**_{eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks._**
+{eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks.
 
-## Description
+### Description
 
 _{eac}Readme_ is an [{eac}Doojigger](https://eacDoojigger.earthasylum.com/) extension which loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks.
 
@@ -53,7 +53,7 @@ One shortcode can do it all...
 
 Or load the entire file as a single code block...
 
-	[eacReadme theme='/themefolder/functions.php']Code File[/eacReadme]
+    [eacReadme theme='/themefolder/functions.php']Code File[/eacReadme]
 
 #### Shortcode Examples
 
@@ -83,22 +83,22 @@ Get multiple blocks and/or sub-sections...
 
 Get a file as a code block...
 
-	[eacReadme theme='/my-child-theme/functions.js' lang='js']Code File[/eacReadme]
-	[eacReadme theme='/my-child-theme/style.css' lang='css']Code File[/eacReadme]
+    [eacReadme theme='/my-child-theme/functions.js' lang='js']Code File[/eacReadme]
+    [eacReadme theme='/my-child-theme/style.css' lang='css']Code File[/eacReadme]
 
 #### Other Options
 
 Change the default cache time-to-live by adding to wp-config.php:
 
-	define('EAC_README_CACHE_LIFETIME',$seconds);	# default: 1-day (DAY_IN_SECONDS).
+    define('EAC_README_CACHE_LIFETIME',$seconds);   # default: 1-day (DAY_IN_SECONDS).
 
 Override the default cache time-to-live
 
-    [eacReadme ttl=$seconds ...]					# minimum: 1-minute (MINUTE_IN_SECONDS).
+    [eacReadme ttl=$seconds ...]                    # minimum: 1-minute (MINUTE_IN_SECONDS).
 
 Set the default GitHub access token (for private repositories):
 
-	define('GITHUB_ACCESS_TOKEN',$token);
+    define('GITHUB_ACCESS_TOKEN',$token);
 
 Set/override the GitHub access token
 
@@ -144,32 +144,32 @@ Default translation table
 
 ...but supports some extensions to that standard:
 
-+	Author & Author URI
-	+	`Author` header may be a simple name or a markdown link:
-		+	`[Author](Author URI)`.
-	+	The `Author` & `Author URI` headers, if present, are combined as a markdown [Author](Author URI).
-+	Homepage
-	+	Looks for `Homepage` or `Plugin URI`.
-+	Version
-	+	Looks for `Version` or `Stable tag`.
-+	Contributors
-	+ 	`profileId` - wordpress profile
-	+ 	`profileId@yourdomain.com` - gravatar profile
-	+ 	`profileId@wordpress` - wordpress profile
-	+ 	`profileId@gravatar` - gravatar profile
-	+ 	`profileId@github` - github profile
-	+	`[display name](mailto:email@address.com)` or `[display name](http://www.gravatar.com/profileId/)`
-	+	`[display name](http://profiles.wordpress.org/profileId/)`
-	+	`[your name](your/profile/url)`
++   Author & Author URI
+    +   `Author` header may be a simple name or a markdown link:
+        +   `[Author](Author URI)`.
+    +   The `Author` & `Author URI` headers, if present, are combined as a markdown [Author](Author URI).
++   Homepage
+    +   Looks for `Homepage` or `Plugin URI`.
++   Version
+    +   Looks for `Version` or `Stable tag`.
++   Contributors
+    +   `profileId` - wordpress profile
+    +   `profileId@yourdomain.com` - gravatar profile
+    +   `profileId@wordpress` - wordpress profile
+    +   `profileId@gravatar` - gravatar profile
+    +   `profileId@github` - github profile
+    +   `[display name](mailto:email@address.com)` or `[display name](http://www.gravatar.com/profileId/)`
+    +   `[display name](http://profiles.wordpress.org/profileId/)`
+    +   `[your name](your/profile/url)`
 
 #### WordPress Actions
 
 3rd-party actors may load and use the parser class included in {eac}Readme...
 
-		do_action('eacReadme_load_parser'); 	// loads \eacParseReadme static class
+        do_action('eacReadme_load_parser');     // loads \eacParseReadme static class
 
 
-## Installation
+### Installation
 
 **{eac}Doojigger Readme Extension** is an extension plugin to and requires installation and registration of [{eac}Doojigger](https://eacDoojigger.earthasylum.com/).
 
@@ -196,13 +196,13 @@ See [Managing Plugins -> Manual Plugin Installation](https://wordpress.org/suppo
 Once installed and activated options for this extension will show in the 'General' tab of {eac}Doojigger settings.
 
 
-## Screenshots
+### Screenshots
 
 1. Readme Extension
 ![{eac}Readme Extension](https://ps.w.org/eacreadme/assets/screenshot-1.png)
 
 
-## Other Notes
+### Other Notes
 
 #### Additional Information
 

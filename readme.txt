@@ -11,8 +11,8 @@ Contributors:       kevinburkholder
 License:            GPLv3 or later
 License URI:        https://www.gnu.org/licenses/gpl.html
 Tags:               readme, markdown, parsedown, {eac}Doojigger, code-highlighting, github, svn
-WordPress URI:		https://wordpress.org/plugins/eacreadme
-GitHub URI:			https://github.com/EarthAsylum/eacReadme
+WordPress URI:      https://wordpress.org/plugins/eacreadme
+GitHub URI:         https://github.com/EarthAsylum/eacReadme
 
 {eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks.
 
@@ -46,7 +46,7 @@ One shortcode can do it all...
 
 Or load the entire file as a single code block...
 
-	[eacReadme theme='/themefolder/functions.php']Code File[/eacReadme]
+    [eacReadme theme='/themefolder/functions.php']Code File[/eacReadme]
 
 = Shortcode Examples =
 
@@ -76,22 +76,22 @@ Get multiple blocks and/or sub-sections...
 
 Get a file as a code block...
 
-	[eacReadme theme='/my-child-theme/functions.js' lang='js']Code File[/eacReadme]
-	[eacReadme theme='/my-child-theme/style.css' lang='css']Code File[/eacReadme]
+    [eacReadme theme='/my-child-theme/functions.js' lang='js']Code File[/eacReadme]
+    [eacReadme theme='/my-child-theme/style.css' lang='css']Code File[/eacReadme]
 
 = Other Options =
 
 Change the default cache time-to-live by adding to wp-config.php:
 
-	define('EAC_README_CACHE_LIFETIME',$seconds);	# default: 1-day (DAY_IN_SECONDS).
+    define('EAC_README_CACHE_LIFETIME',$seconds);   # default: 1-day (DAY_IN_SECONDS).
 
 Override the default cache time-to-live
 
-    [eacReadme ttl=$seconds ...]					# minimum: 1-minute (MINUTE_IN_SECONDS).
+    [eacReadme ttl=$seconds ...]                    # minimum: 1-minute (MINUTE_IN_SECONDS).
 
 Set the default GitHub access token (for private repositories):
 
-	define('GITHUB_ACCESS_TOKEN',$token);
+    define('GITHUB_ACCESS_TOKEN',$token);
 
 Set/override the GitHub access token
 
@@ -137,29 +137,29 @@ Default translation table
 
 ...but supports some extensions to that standard:
 
-+	Author & Author URI
-	+	`Author` header may be a simple name or a markdown link:
-		+	`[Author](Author URI)`.
-	+	The `Author` & `Author URI` headers, if present, are combined as a markdown [Author](Author URI).
-+	Homepage
-	+	Looks for `Homepage` or `Plugin URI`.
-+	Version
-	+	Looks for `Version` or `Stable tag`.
-+	Contributors
-	+ 	`profileId` - wordpress profile
-	+ 	`profileId@yourdomain.com` - gravatar profile
-	+ 	`profileId@wordpress` - wordpress profile
-	+ 	`profileId@gravatar` - gravatar profile
-	+ 	`profileId@github` - github profile
-	+	`[display name](mailto:email@address.com)` or `[display name](http://www.gravatar.com/profileId/)`
-	+	`[display name](http://profiles.wordpress.org/profileId/)`
-	+	`[your name](your/profile/url)`
++   Author & Author URI
+    +   `Author` header may be a simple name or a markdown link:
+        +   `[Author](Author URI)`.
+    +   The `Author` & `Author URI` headers, if present, are combined as a markdown [Author](Author URI).
++   Homepage
+    +   Looks for `Homepage` or `Plugin URI`.
++   Version
+    +   Looks for `Version` or `Stable tag`.
++   Contributors
+    +   `profileId` - wordpress profile
+    +   `profileId@yourdomain.com` - gravatar profile
+    +   `profileId@wordpress` - wordpress profile
+    +   `profileId@gravatar` - gravatar profile
+    +   `profileId@github` - github profile
+    +   `[display name](mailto:email@address.com)` or `[display name](http://www.gravatar.com/profileId/)`
+    +   `[display name](http://profiles.wordpress.org/profileId/)`
+    +   `[your name](your/profile/url)`
 
 = WordPress Actions =
 
 3rd-party actors may load and use the parser class included in {eac}Readme...
 
-		do_action('eacReadme_load_parser'); 	// loads \eacParseReadme static class
+        do_action('eacReadme_load_parser');     // loads \eacParseReadme static class
 
 
 == Installation ==
@@ -219,84 +219,84 @@ You should receive a copy of the GNU General Public License along with this prog
 
 = Version 1.4.0 – February 9, 2024 =
 
-+	Added github profile support along with optional profile formats for contributors.
-+	Trim tags when tagifying from header.
-+	Added new action, 'eacReadme_load_parser', to allow 3rd-party apps to use the parser class.
-	+ 	`do_action('eacReadme_load_parser'); // loads \eacParseReadme static class`
-+	Added context to file access for github authentication & WP headers.
-+	Changed WordPress svn uri (https://ps.w.org/)
++   Added github profile support along with optional profile formats for contributors.
++   Trim tags when tagifying from header.
++   Added new action, 'eacReadme_load_parser', to allow 3rd-party apps to use the parser class.
+    +   `do_action('eacReadme_load_parser'); // loads \eacParseReadme static class`
++   Added context to file access for github authentication & WP headers.
++   Changed WordPress svn uri (https://ps.w.org/)
 
 = Version 1.3.0 – January 31, 2024 =
 
-+	Added 'ttl' option to shortcode to set cache time-to-live (min 1 minute).
-+	Added WP SVN support:
-	+ 	[eacReadme wpsvn='/slugname/trunk/readme.txt']document[/eacReadme]
-+	Added GitHub support:
-	+ 	[eacReadme github='/username/repository/main/readme.txt']document[/eacReadme]
-	+	[eacReadme github='...',token='...']
++   Added 'ttl' option to shortcode to set cache time-to-live (min 1 minute).
++   Added WP SVN support:
+    +   [eacReadme wpsvn='/slugname/trunk/readme.txt']document[/eacReadme]
++   Added GitHub support:
+    +   [eacReadme github='/username/repository/main/readme.txt']document[/eacReadme]
+    +   [eacReadme github='...',token='...']
 
 = Version 1.2.6 – January 24, 2024 =
 
-+	Fixed "preg_match(): Passing null" notice.
++   Fixed "preg_match(): Passing null" notice.
 
 = Version 1.2.5 – December 8, 2023 =
 
-+	Fixed caching (yet again) by adding current file name to cache key.
-	+	subsequent segments could load the wrong cache key when no file given.
++   Fixed caching (yet again) by adding current file name to cache key.
+    +   subsequent segments could load the wrong cache key when no file given.
 
 = Version 1.2.4 – December 4, 2023 =
 
-+	Added button to flush group cache when using drop-in object cache.
-+	Added use of 'EAC_README_CACHE_LIFETIME' constant to set cache life-time (default = 1 day).
-	+	 In wp-config.php: `define('EAC_README_CACHE_LIFETIME',3600);`
-+	md5() cache key name.
++   Added button to flush group cache when using drop-in object cache.
++   Added use of 'EAC_README_CACHE_LIFETIME' constant to set cache life-time (default = 1 day).
+    +    In wp-config.php: `define('EAC_README_CACHE_LIFETIME',3600);`
++   md5() cache key name.
 
 = Version 1.2.3 – August 30, 2023 =
 
-+	Improved caching.
++   Improved caching.
 
 = Version 1.2.2 – June 6, 2023 =
 
-+	Removed unnecessary plugin_update_notice trait.
-+	Cosmetic changes to option & help titles.
++   Removed unnecessary plugin_update_notice trait.
++   Cosmetic changes to option & help titles.
 
 = Version 1.2.1 – April 22, 2023 =
 
-+	Correctly load inline style using wp_add_inline_style()
-+	Tested with WordPress 6.2 and {eac}Doojigger 2.2.
++   Correctly load inline style using wp_add_inline_style()
++   Tested with WordPress 6.2 and {eac}Doojigger 2.2.
 
 = Version 1.2.0 – November 16, 2022 =
 
-+	Updated to / Requires {eac}Doojigger 2.0.
-+	Uses 'options_settings_page' action to register options.
-+	Added contextual help using 'options_settings_help' action.
-+	Renamed extension file(s) and vendor directory.
-+	Changed tab name in registerExtension (must be -re-enabled in admin).
-+	Moved plugin_action_links hook to eacDoojigger_load_extensions filter.
-+	Added use of WP_Object_Cache.
-+	Fixed problem with admin page reload when changing style.
++   Updated to / Requires {eac}Doojigger 2.0.
++   Uses 'options_settings_page' action to register options.
++   Added contextual help using 'options_settings_help' action.
++   Renamed extension file(s) and vendor directory.
++   Changed tab name in registerExtension (must be -re-enabled in admin).
++   Moved plugin_action_links hook to eacDoojigger_load_extensions filter.
++   Added use of WP_Object_Cache.
++   Fixed problem with admin page reload when changing style.
 
 = Version 1.1.1 – September 25, 2022 =
 
-+	Fixed potential PHP notice on load (plugin_action_links_).
++   Fixed potential PHP notice on load (plugin_action_links_).
 +   Added upgrade notice trait for plugins page.
-+	Added tagify option: getTags(true) when processing tags to convert to array [slug=>tag]
++   Added tagify option: getTags(true) when processing tags to convert to array [slug=>tag]
 
 = Version 1.1.0 – September 7, 2022 =
 
-+	Added ability to get the full file contents as a code block (Code File).
-+	Renamed include file eacParseReadme.php to class.readme_parser.php.
++   Added ability to get the full file contents as a code block (Code File).
++   Renamed include file eacParseReadme.php to class.readme_parser.php.
 
 = Version 1.0.7 – August 28, 2022 =
 
-+	Updated to / Requires {eac}Doojigger 1.2
-+	Added 'Settings', 'Docs' and 'Support' links on plugins page.
++   Updated to / Requires {eac}Doojigger 1.2
++   Added 'Settings', 'Docs' and 'Support' links on plugins page.
 +   Fixed admin display error (section not found).
 
 = Version 1.0.6 – July 12, 2022 =
 
 +   Get contributor profile when getting all headers.
-+	Move short description before headers in getDocument().
++   Move short description before headers in getDocument().
 
 = Version 1.0.5 – June 22, 2022 =
 
