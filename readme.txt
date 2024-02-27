@@ -1,8 +1,8 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.4.0
-Last Updated:       09-Feb-2024
+Stable tag:         1.4.1
+Last Updated:       27-Feb-2024
 Requires at least:  5.5.0
 Tested up to:       6.4
 Requires PHP:       7.4
@@ -29,7 +29,7 @@ The first used shortcode must indicate the file to load...
     [eacReadme plugin='/pluginfolder/readme.txt']   # plugin file is relative to the WordPress plugins folder (wp-content/plugins/)
     [eacReadme theme='/themefolder/readme.txt']     # theme file is relative to the WordPress themes folder (wp-content/themes/)
     [eacReadme wpsvn='/slugname/trunk/readme.txt']  # load file from WordPress SVN repository
-    [eacReadme github='/username/repository/main/readme.txt']        # load file from github repository
+    [eacReadme github='/owner/repository/main/readme.txt']        # load file from github repository
 
 After which, headers and sections may be pulled from that file...
 
@@ -154,12 +154,25 @@ Default translation table
     +   `[display name](mailto:email@address.com)` or `[display name](http://www.gravatar.com/profileId/)`
     +   `[display name](http://profiles.wordpress.org/profileId/)`
     +   `[your name](your/profile/url)`
++   A "banner" section may be included between the top title line (=== title ===) and the first header line.
+
+{eac}Readme now supports standard markdown (readme.md) formatting for section identification
+(i.e "=== title ===" and "## title" are equivalent).
 
 = WordPress Actions =
 
 3rd-party actors may load and use the parser class included in {eac}Readme...
 
         do_action('eacReadme_load_parser');     // loads \eacParseReadme static class
+		if (class_exists('\eacParseReadme'))
+		{
+		    \eacParseReadme::loadFile($readme,$context);
+		    $html_document  = \eacParseReadme::getDocument();
+		    $title          = \eacParseReadme::getTitle();
+		    $version        = \eacParseReadme::getVersion();
+		    $donations      = \eacParseReadme::getHeader('donate_link');
+		    $description    = \eacParseReadme::getSection('description');
+		}
 
 
 == Installation ==
@@ -217,6 +230,14 @@ You should receive a copy of the GNU General Public License along with this prog
 
 == Changelog ==
 
+= Version 1.4.1 – February 27, 2024 =
+
++   Improved isolation of headers and short description.
++   Support readme.md (standard markdown) files.
+    +   Expects WordPress layout (h2 title, headers, Short Description, h3 sections).
++   Non-standard 'banner' content between === title === and headers.
++   Changed most regular expression delimiters.
+
 = Version 1.4.0 – February 9, 2024 =
 
 +   Added github profile support along with optional profile formats for contributors.
@@ -232,7 +253,7 @@ You should receive a copy of the GNU General Public License along with this prog
 +   Added WP SVN support:
     +   [eacReadme wpsvn='/slugname/trunk/readme.txt']document[/eacReadme]
 +   Added GitHub support:
-    +   [eacReadme github='/username/repository/main/readme.txt']document[/eacReadme]
+    +   [eacReadme github='/owner/repository/main/readme.txt']document[/eacReadme]
     +   [eacReadme github='...',token='...']
 
 = Version 1.2.6 – January 24, 2024 =

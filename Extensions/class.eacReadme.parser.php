@@ -124,6 +124,7 @@ change log block (using markdown)
 
 /* Non-WP-standard...
 
+{banner content between title and headers}
 Homepage: http://url/to/plugin/page
 Plugin URI: http://url/to/plugin/page
 WordPress URI: https://wordpress.org/plugins/page
@@ -230,7 +231,14 @@ if (! class_exists('eacParseReadme',false))
 			if (! self::$content = file_get_contents($filePath,false,$file_context)) {
 				return false;
 			}
-			self::$content .= "\n== [###]\n";
+			// if normal markdown, replace header markers with WordPress markers
+			self::$content = preg_replace(
+			//		H4						H3					H2
+				[ "|^#### (.*)$|m", 	"|^### (.*)$|m", 	"|^## (.*)$|m" ],
+				[ "= $1 =", 			"== $1 ==",			"=== $1 ===" ],
+				self::$content
+			);
+			self::$content .= "\n== [EOF]\n";
 			self::$headers 	= null;
 			self::$parser 	= new \Parsedown();
 			return true;
@@ -246,10 +254,12 @@ if (! class_exists('eacParseReadme',false))
 		public static function parseMarkdownText(string $text): string
 		{
 			// Replace WordPress header markers with Markdown markers
-			$text = preg_replace("/^=== (.*?) ===$/m", "## $1", $text);		// h2
-			$text = preg_replace("/^== (.*?) ==$/m", "### $1", $text);		// h3
-			$text = preg_replace("/^= (.*?) =$/m", "#### $1", $text);		// h4
-
+			$text = preg_replace(
+			//		H2							H3						H4
+				[ "|^=== (.*?) ===$|m", 	"|^== (.*?) ==$|m",		"|^= (.*?) =$|m" ],
+				[ "## $1", 					"### $1", 				"#### $1" ],
+				$text
+			);
 			return trim(self::$parser->text($text));
 		}
 
@@ -267,23 +277,62 @@ if (! class_exists('eacParseReadme',false))
 
 
 		/*
+		 * Get headers block
+		 *
+		 * @param bool 		$parse - parse the segment through Parsedown
+		 * @param bool 		$inline - parse as inline text (no enclosing <p>, no wp header markup)
+		 * @param string	$content - get from content
+		 * @return string	requested segment or empty string
+		 */
+		public static function getHeaderBlock(bool $parse = false, bool $inline = false, $content = null): string
+		{
+			if (self::$headers)	// get all headers once
+			{
+				$text = self::$headers;
+			}
+			else
+			{
+				$pattern = '|'."^([a-zA-Z0-9 ]+):(\s)(.*)\n".'|m';
+
+				$content = $content ?: self::$content;
+				// search up to the first section header
+				if (!preg_match_all($pattern, substr( $content, 0, strpos($content,"\n== ") ), $matches))
+				{
+					return '';
+				}
+
+				$text = trim(implode("",$matches[0]));
+				//echo "<p>Pattern:{$pattern}</p><pre>";print_r([$matches,$text]);echo "</pre><hr>";
+				self::$headers = $text;
+			}
+
+			if ($parse)
+			{
+				$text = ($inline) ? self::parseMarkdownLine($text) : self::parseMarkdownText($text);
+			}
+
+			return $text;
+		}
+
+
+		/*
 		 * Get a segment of the readme file
 		 *
 		 * @param string 	$start_marker - the starting marker of the segment
 		 * @param string 	$end_marker - the ending marker of the segment
 		 * @param bool 		$parse - parse the segment through Parsedown
 		 * @param bool 		$inline - parse as inline text (no enclosing <p>, no wp header markup)
+		 * @param string	$content - get from content
 		 * @return string	requested segment or empty string
 		 */
 		public static function getSegment(string $start_marker, string $end_marker, bool $parse = false, bool $inline = false, $content = null): string
 		{
-			$pattern = '/'.preg_quote($start_marker,'/').'(.*)'.preg_quote($end_marker,'/').'/isU';
+			$pattern = '|'.preg_quote($start_marker,'|').'(.*)'.preg_quote($end_marker,'|').'|isU';
 
 			if (!preg_match($pattern, (string)($content ?: self::$content), $matches))
 			{
 				return '';
 			}
-			//	echo "<p>{$pattern}</p><pre>";print_r($matches);echo "</pre><hr>";
 
 			$text = trim($matches[1]);
 
@@ -321,7 +370,7 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getCodeFile(): string
 		{
-			$text = self::getSegment("","\n== [###]",false);
+			$text = self::getSegment("","\n== [EOF]",false);
 			$text = self::parseMarkdownText("```\n".$text."\n```");
 			return self::codeTagLanguage($text);
 		}
@@ -339,10 +388,8 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getHeader(string $header, bool $parse = false): string
 		{
-			if (!self::$headers) {	// get all headers once
-				self::$headers = "\n".self::getSegment(" ===\n", "\n\n", false)."\n";
-			}
-			return self::getSegment("\n{$header}:", "\n", $parse, $parse, self::$headers);
+			$headers = self::getHeaderBlock(false);
+			return self::getSegment("^{$header}:", "\n", $parse, $parse, $headers);
 		}
 
 
@@ -358,17 +405,16 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getAllHeaders(bool $parse = true, bool $addTags = false): string
 		{
-			$lines = self::getSegment(" ===\n", "\n\n", $parse, true);
+			$lines = self::getHeaderBlock($parse, true);
 
 			if ($addTags)
 			{
 				$result = "<details id='readme-head' class='readme'><summary>".self::_translate('Headers')."</summary><p>";
-				$pattern = "/^(.*):\s(.*)$/m";
+				$pattern = "|^(.*):\s(.*)$|m";
 				if (preg_match_all($pattern, $lines, $matches))
 				{
 					foreach ($matches[1] as $x=>$line)
 					{
-						//$headerId = str_replace(' ','-',strtolower($line));
 						if (strtolower($line) == 'contributors') {
 							$matches[2][$x] = self::getContributors();
 						}
@@ -395,7 +441,7 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getSection(string $section, bool $parse = true): string
 		{
-			$pattern = '/^(.*)\/(.*)$/';
+			$pattern = '|^(.*)/(.*)$|';	// look for section/sub-section (H4 within H3)
 
 			if (preg_match($pattern, $section, $matches))
 			{
@@ -418,7 +464,7 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getAllSections($addTags = false): string
 		{
-			$pattern = '/^== (.*) ==$/m';
+			$pattern = '|^== (.*) ==$|m';
 
 			$result = '';
 			$tags 	= '';
@@ -428,10 +474,12 @@ if (! class_exists('eacParseReadme',false))
 				{
 					if ($addTags) {
 						$sectionId = str_replace(' ','-',strtolower($section));
-					//	if (count($matches[1]) > 1) {
-							$tags .= "<a href='#readme-{$sectionId}' class='readme' title='".self::_translate($section)."'>".self::_translate($section)."</a>\n";
-					//	}
-						$result .= "<details id='readme-{$sectionId}' class='readme' open><summary>".self::_translate($section)."</summary>".self::getSection($section)."</details>\n<a href='#readme-top'>Top</a>\n";
+						$tags 	.= "<a href='#readme-{$sectionId}' class='readme' title='".
+									self::_translate($section)."'>".
+									self::_translate($section)."</a>\n";
+						$result .= "<details id='readme-{$sectionId}' class='readme' open><summary>".
+									self::_translate($section)."</summary>".
+									self::getSection($section)."</details>\n<a href='#readme-top'>Top</a>\n";
 					} else {
 						$result .= "<h3 class='readme'>{$section}</h3>".self::getSection($section);
 					}
@@ -453,6 +501,7 @@ if (! class_exists('eacParseReadme',false))
 		public static function getDocument($addTags = true): string
 		{
 			return "<a id='readme-top'/></a>" .
+					"<div id='readme-banner' class='readme'>".self::getBanner().'</div>' .
 					"<p id='readme-short' class='readme'>".self::getShortDescription()."</p>" .
 					self::getAllHeaders(true,true) .
 					self::getAllSections($addTags);
@@ -474,6 +523,28 @@ if (! class_exists('eacParseReadme',false))
 
 
 		/*
+		 * Get non-standard segment - banner
+		 *
+		 * banner is anything between the "=== title ===" line and the first header (normally nothing)
+		 * banner is parsed for markdown
+		 *
+		 * @return string	requested segment or empty string
+		 */
+		public static function getBanner(): string
+		{
+			$header 	= explode("\n", self::getHeaderBlock());
+			$header 	= $header[0];
+			$content	= self::getSegment(" ===\n", "\n{$header}",true);
+			// special, non-standard case: look for opening html tag before headers,
+			// where headers are wrapped in an html tag (<header>...</header>, <details>...</details>)
+			if (preg_match("/(.*)\n<(header|details)>/s", $content, $matches)) {
+				$content	= $matches[1];
+			}
+			return trim($content);
+		}
+
+
+		/*
 		 * Get pre-defined segment - short description
 		 *
 		 * Description is a single line proceeded with header lines and a blank line followed by a blank line and the (long) Description section
@@ -484,7 +555,15 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getShortDescription(): string
 		{
-			return self::getSegment("\n\n", "\n== ") ?: self::getHeader('Description');
+			$header 	= explode("\n", self::getHeaderBlock());
+			$header 	= end($header);
+			$content	= self::getSegment("{$header}", "\n== ");
+			// special, non-standard case: look for closing html tag before short description,
+			// where headers are wrapped in an html tag (<header>...</header>, <details>...</details>)
+			if (preg_match("/<\/(header|details)>\n(.*)/s", $content, $matches)) {
+				$content	= $matches[2];
+			}
+			return ltrim(trim($content),"> ");
 		}
 
 
@@ -556,7 +635,7 @@ if (! class_exists('eacParseReadme',false))
 			foreach ($tags as $tag)
 			{
 				$slug = str_replace([' ','_','.'],'-',strtolower(trim($tag)));
-				$slug = preg_replace('/[^a-z0-9_\-]/','',$slug);
+				$slug = preg_replace('|[^a-z0-9_\-]|','',$slug);
 				$tagArray[$slug] = trim($tag);
 			}
 			return $tagArray;
@@ -593,24 +672,24 @@ if (! class_exists('eacParseReadme',false))
 				}
 */
 
-				if (preg_match('/^\[(.*?)\]\((.*)\)$/', $contributor, $matches))
+				if (preg_match('|^\[(.*?)\]\((.*)\)$|', $contributor, $matches))
 				// [display name](profile link)
 				{
-					if (preg_match('/^mailto:(.*)/i', $matches[2], $link))
+					if (preg_match('|^mailto:(.*)|i', $matches[2], $link))
 					// [display name](mailto:email@address.com)
 					{
 						$profiles = array_merge($profiles,self::_getGravatarProfile(md5($link[1]),$link[1],$matches[1]));
 						continue;
 					}
 
-					if (preg_match('/(.*)\.gravatar\.com\/(.*)/i', $matches[2], $link))
+					if (preg_match('|(.*)\.gravatar\.com/(.*)|i', $matches[2], $link))
 					// [display name](http://www.gravatar.com/profile/)
 					{
 						$profiles = array_merge($profiles,self::_getGravatarProfile($link[2],$link[2],$matches[1]));
 						continue;
 					}
 
-					if (preg_match('/(.*)\.wordpress\.org\/(.*)/i', $matches[2], $link))
+					if (preg_match('|(.*)\.wordpress\.org/(.*)|i', $matches[2], $link))
 					// [display name](http://profiles.wordpress.org/profile/)
 					{
 						$profiles = array_merge($profiles,self::_getWordpressProfile($link[2],$matches[1]));
@@ -811,7 +890,7 @@ if (! class_exists('eacParseReadme',false))
 			if ($usePreg)
 			{
 				foreach (self::$translate as $from=>$to) {
-					$title = preg_replace("/^{$from}\n$/i", $to, $title, 1);
+					$title = preg_replace("|^{$from}\n$|i", $to, $title, 1);
 				}
 			}
 			return $title;

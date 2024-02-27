@@ -1,13 +1,14 @@
 ## {eac}Doojigger Readme Extension for WordPress  
 [![EarthAsylum Consulting](https://img.shields.io/badge/EarthAsylum-Consulting-0?&labelColor=6e9882&color=707070)](https://earthasylum.com/)
 [![WordPress](https://img.shields.io/badge/WordPress-Plugins-grey?logo=wordpress&labelColor=blue)](https://wordpress.org/plugins/search/EarthAsylum/)
-[![eacDoojigger](https://img.shields.io/badge/Requires-{eac}Doojigger-da821d)](https://eacDoojigger.earthasylum.com/)
-<details><summary>Plugin Header</summary><samp>
+[![eacDoojigger](https://img.shields.io/badge/Requires-%7Beac%7DDoojigger-da821d)](https://eacDoojigger.earthasylum.com/)
+
+<details><summary>Plugin Header</summary>
 
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
-Stable tag:         1.4.0  
-Last Updated:       09-Feb-2024  
+Stable tag:         1.4.1  
+Last Updated:       27-Feb-2024  
 Requires at least:  5.5.0  
 Tested up to:       6.4  
 Requires PHP:       7.4  
@@ -19,9 +20,9 @@ Tags:               readme, markdown, parsedown, {eac}Doojigger, code-highlighti
 WordPress URI:      https://wordpress.org/plugins/eacreadme  
 GitHub URI:         https://github.com/EarthAsylum/eacReadme  
 
-</samp></details>
+</details>
 
-{eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks.
+> {eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks.
 
 ### Description
 
@@ -36,7 +37,7 @@ The first used shortcode must indicate the file to load...
     [eacReadme plugin='/pluginfolder/readme.txt']   # plugin file is relative to the WordPress plugins folder (wp-content/plugins/)
     [eacReadme theme='/themefolder/readme.txt']     # theme file is relative to the WordPress themes folder (wp-content/themes/)
     [eacReadme wpsvn='/slugname/trunk/readme.txt']  # load file from WordPress SVN repository
-    [eacReadme github='/username/repository/main/readme.txt']        # load file from github repository
+    [eacReadme github='/owner/repository/main/readme.txt']        # load file from github repository
 
 After which, headers and sections may be pulled from that file...
 
@@ -161,12 +162,25 @@ Default translation table
     +   `[display name](mailto:email@address.com)` or `[display name](http://www.gravatar.com/profileId/)`
     +   `[display name](http://profiles.wordpress.org/profileId/)`
     +   `[your name](your/profile/url)`
++   A "banner" section may be included between the top title line (=== title ===) and the first header line.
+
+{eac}Readme now supports standard markdown (readme.md) formatting for section identification
+(i.e "=== title ===" and "## title" are equivalent).
 
 #### WordPress Actions
 
 3rd-party actors may load and use the parser class included in {eac}Readme...
 
         do_action('eacReadme_load_parser');     // loads \eacParseReadme static class
+		if (class_exists('\eacParseReadme'))
+		{
+		    \eacParseReadme::loadFile($readme,$context);
+		    $html_document  = \eacParseReadme::getDocument();
+		    $title          = \eacParseReadme::getTitle();
+		    $version        = \eacParseReadme::getVersion();
+		    $donations      = \eacParseReadme::getHeader('donate_link');
+		    $description    = \eacParseReadme::getSection('description');
+		}
 
 
 ### Installation
