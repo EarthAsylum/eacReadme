@@ -389,7 +389,7 @@ if (! class_exists('eacParseReadme',false))
 		public static function getHeader(string $header, bool $parse = false): string
 		{
 			$headers = self::getHeaderBlock(false);
-			return self::getSegment("^{$header}:", "\n", $parse, $parse, $headers);
+			return self::getSegment("{$header}:", "\n", $parse, $parse, $headers);
 		}
 
 
