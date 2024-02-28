@@ -234,7 +234,7 @@ if (! class_exists('eacParseReadme',false))
 			// if normal markdown, replace header markers with WordPress markers
 			self::$content = preg_replace(
 			//		H4						H3					H2
-				[ "|^#### (.*)$|m", 	"|^### (.*)$|m", 	"|^## (.*)$|m" ],
+				[ "|^#### (.+)$|m", 	"|^### (.+)$|m", 	"|^## (.+)$|m" ],
 				[ "= $1 =", 			"== $1 ==",			"=== $1 ===" ],
 				self::$content
 			);
@@ -256,7 +256,7 @@ if (! class_exists('eacParseReadme',false))
 			// Replace WordPress header markers with Markdown markers
 			$text = preg_replace(
 			//		H2							H3						H4
-				[ "|^=== (.*?) ===$|m", 	"|^== (.*?) ==$|m",		"|^= (.*?) =$|m" ],
+				[ "|^=== (.+) ===$|m", 	"|^== (.+) ==$|m",		"|^= (.+) =$|m" ],
 				[ "## $1", 					"### $1", 				"#### $1" ],
 				$text
 			);
@@ -292,7 +292,7 @@ if (! class_exists('eacParseReadme',false))
 			}
 			else
 			{
-				$pattern = '|'."^([a-zA-Z0-9 ]+):(\s)(.*)\n".'|m';
+				$pattern = '|'."^([a-zA-Z0-9 ]+):(\s+)(.+)\n".'|m';
 
 				$content = $content ?: self::$content;
 				// search up to the first section header
@@ -300,9 +300,9 @@ if (! class_exists('eacParseReadme',false))
 				{
 					return '';
 				}
+				//echo "<p>Pattern:{$pattern}</p><pre>";print_r([$matches,$text]);echo "</pre><hr>";
 
 				$text = trim(implode("",$matches[0]))."\n";
-				//echo "<p>Pattern:{$pattern}</p><pre>";print_r([$matches,$text]);echo "</pre><hr>";
 				self::$headers = $text;
 			}
 

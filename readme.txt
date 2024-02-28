@@ -2,7 +2,7 @@
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
 Stable tag:         1.4.1
-Last Updated:       27-Feb-2024
+Last Updated:       28-Feb-2024
 Requires at least:  5.5.0
 Tested up to:       6.4
 Requires PHP:       7.4
@@ -135,29 +135,74 @@ Default translation table
 
 {eac}Readme expects a well-formed readme.txt file that follows the [WordPress readme file standard](https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works)...
 
+    === title ===
+    header: value
+    header: value
+    short Description
+    == section ==
+    = sub-section =
+    
 ...but supports some extensions to that standard:
 
 +   Author & Author URI
     +   `Author` header may be a simple name or a markdown link:
         +   `[Author](Author URI)`.
-    +   The `Author` & `Author URI` headers, if present, are combined as a markdown [Author](Author URI).
+    +   The `Author` & `Author URI` headers, if present, are combined as a markdown `[Author](Author URI)`.
+
 +   Homepage
     +   Looks for `Homepage` or `Plugin URI`.
+
 +   Version
     +   Looks for `Version` or `Stable tag`.
+
 +   Contributors
-    +   `profileId` - wordpress profile
-    +   `profileId@yourdomain.com` - gravatar profile
+    +   `profileId` - wordpress profile (standard)
+    +   `profileId@youremaildomain.com` - gravatar profile
     +   `profileId@wordpress` - wordpress profile
     +   `profileId@gravatar` - gravatar profile
     +   `profileId@github` - github profile
     +   `[display name](mailto:email@address.com)` or `[display name](http://www.gravatar.com/profileId/)`
     +   `[display name](http://profiles.wordpress.org/profileId/)`
-    +   `[your name](your/profile/url)`
-+   A "banner" section may be included between the top title line (=== title ===) and the first header line.
+    +   `[your name]((http://your/profile/url)`
 
-{eac}Readme now supports standard markdown (readme.md) formatting for section identification
-(i.e "=== title ===" and "## title" are equivalent).
++   A "banner" section may be included between the top title line and the first header line.
+
+```
+    === title ===
+   [![banner](//image_url)](//link_url)
+    header: value
+    header: value
+    short Description
+    == section ==
+    = sub-section =
+```
+
++   The header block may be enclosed in an html `<header>` or `<details>` tag, opening and closing each on a single line. These tags are ignored by the eacParseReadme parser but may be beneficial if posting your readme file elseware. See [{eac}Readme on Github](https://github.com/EarthAsylum/eacReadme).
+
+>   Note: these extensions are not supported by the WordPress Plugin Repository.
+
+{eac}Readme supports standard markdown (readme.md) formatting for section identification.
++   `=== title ===` and `## title` are equivalent
++   `== section ==` and `### section` are equivalent
++   `= sub-section =` and `#### sub-section` are equivalent
+
+
+= Output HTML =
+
+When retrieving the header block with ...
+
+`[eacReadme]All Headers[/eacReadme]` or `\eacParseReadme::getAllHeaders()`
+
+Or when retrieving all sections with ...
+
+`[eacReadme]All Sections[/eacReadme]` or `\eacParseReadme::getAllSections()`
+    
+Or when retrieving the entire document with ...
+
+`[eacReadme]Document[/eacReadme]` or `\eacParseReadme::getDocument()`
+
+Additional html tags and classes are added, including wrapping blocks within a `<details>` tags, adding `readme-*` class names, and adding `<a>` anchor links.
+
 
 = WordPress Actions =
 
@@ -207,6 +252,9 @@ Once installed and activated options for this extension will show in the 'Genera
 1. Readme Extension
 ![{eac}Readme Extension](https://ps.w.org/eacreadme/assets/screenshot-1.png)
 
+1. Readme Help
+![{eac}Readme Help](https://ps.w.org/eacreadme/assets/screenshot-2.png)
+
 
 == Other Notes ==
 
@@ -216,6 +264,7 @@ Once installed and activated options for this extension will show in the 'Genera
 +   {eac}Readme uses [Parsedown 1.7.4](http://parsedown.org/), Copyright (c) 2013-2018 [Emanuil Rusev](erusev.com)
 +   {eac}Readme uses [Prism syntax highlighter](https://prismjs.com/), Copyright (c) 2012 Lea Verou
 
++   The [{eac}SoftwareRegistry Software Product Taxonomy](https://swregistry.earthasylum.com/software-taxonomy/) plugin uses {eac}Readme to parse readme markdown files hosted on Github to provide plugin information and automated updates to WordPress for self-hosted plugins.
 
 == Copyright ==
 
@@ -230,13 +279,14 @@ You should receive a copy of the GNU General Public License along with this prog
 
 == Changelog ==
 
-= Version 1.4.1 – February 27, 2024 =
+= Version 1.4.1 – February 28, 2024 =
 
++   Additional documentation.
 +   Improved isolation of headers and short description.
 +   Support readme.md (standard markdown) files.
     +   Expects WordPress layout (h2 title, headers, Short Description, h3 sections).
 +   Non-standard 'banner' content between === title === and headers.
-+   Changed most regular expression delimiters.
++   Updated most regular expressions.
 
 = Version 1.4.0 – February 9, 2024 =
 
