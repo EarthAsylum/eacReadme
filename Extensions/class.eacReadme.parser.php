@@ -301,7 +301,7 @@ if (! class_exists('eacParseReadme',false))
 					return '';
 				}
 
-				$text = trim(implode("",$matches[0]));
+				$text = trim(implode("",$matches[0]))."\n";
 				//echo "<p>Pattern:{$pattern}</p><pre>";print_r([$matches,$text]);echo "</pre><hr>";
 				self::$headers = $text;
 			}
@@ -532,7 +532,7 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getBanner(): string
 		{
-			$header 	= explode("\n", self::getHeaderBlock());
+			$header 	= explode("\n", trim(self::getHeaderBlock()));
 			$header 	= $header[0];
 			$content	= self::getSegment(" ===\n", "\n{$header}",true);
 			// special, non-standard case: look for opening html tag before headers,
@@ -555,7 +555,7 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getShortDescription(): string
 		{
-			$header 	= explode("\n", self::getHeaderBlock());
+			$header 	= explode("\n", trim(self::getHeaderBlock()));
 			$header 	= end($header);
 			$content	= self::getSegment("{$header}", "\n== ");
 			// special, non-standard case: look for closing html tag before short description,
