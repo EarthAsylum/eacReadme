@@ -217,15 +217,15 @@ Additional html tags and classes are added, including wrapping blocks within a `
 3rd-party actors may load and use the parser class included in {eac}Readme...
 
         do_action('eacReadme_load_parser');     // loads \eacParseReadme static class
-		if (class_exists('\eacParseReadme'))
-		{
-		    \eacParseReadme::loadFile($readme,$context);
-		    $html_document  = \eacParseReadme::getDocument();
-		    $title          = \eacParseReadme::getTitle();
-		    $version        = \eacParseReadme::getVersion();
-		    $donations      = \eacParseReadme::getHeader('donate_link');
-		    $description    = \eacParseReadme::getSection('description');
-		}
+        if (class_exists('\eacParseReadme'))
+        {
+            \eacParseReadme::loadFile($readme,$context);
+            $html_document  = \eacParseReadme::getDocument();
+            $title          = \eacParseReadme::getTitle();
+            $version        = \eacParseReadme::getVersion();
+            $donations      = \eacParseReadme::getHeader('donate_link');
+            $description    = \eacParseReadme::getSection('description');
+        }
 
 
 ### Installation
@@ -273,5 +273,4 @@ Once installed and activated options for this extension will show in the 'Genera
 +   {eac}Readme uses [Prism syntax highlighter](https://prismjs.com/), Copyright (c) 2012 Lea Verou
 
 +   The [{eac}SoftwareRegistry Software Product Taxonomy](https://swregistry.earthasylum.com/software-taxonomy/) plugin uses {eac}Readme to parse readme markdown files hosted on Github to provide plugin information and automated updates to WordPress for self-hosted plugins.
-
 
