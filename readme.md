@@ -7,10 +7,10 @@
 
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
-Stable tag:         1.4.1  
-Last Updated:       01-Mar-2024  
+Stable tag:         1.4.2  
+Last Updated:       04-Apr-2024  
 Requires at least:  5.5.0  
-Tested up to:       6.4  
+Tested up to:       6.5  
 Requires PHP:       7.4  
 Requires EAC:       2.0  
 Contributors:       [kevinburkholder](https://profiles.wordpress.org/kevinburkholder)  

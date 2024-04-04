@@ -296,7 +296,7 @@ if (! class_exists('eacParseReadme',false))
 
 				$content = $content ?: self::$content;
 				// search up to the first section header
-				if (!preg_match_all($pattern, substr( $content, 0, strpos($content,"\n== ") ), $matches))
+				if (!$content || !preg_match_all($pattern, substr( $content, 0, strpos($content,"\n== ") ), $matches))
 				{
 					return '';
 				}
