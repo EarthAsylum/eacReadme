@@ -7,8 +7,8 @@
 
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
-Stable tag:         1.4.2  
-Last Updated:       04-Apr-2024  
+Stable tag:         1.4.3  
+Last Updated:       12-Oct-2024  
 Requires at least:  5.8  
 Tested up to:       6.6  
 Requires PHP:       7.4  

@@ -1,8 +1,8 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.4.2
-Last Updated:       04-Apr-2024
+Stable tag:         1.4.3
+Last Updated:       12-Oct-2024
 Requires at least:  5.8
 Tested up to:       6.6
 Requires PHP:       7.4
@@ -278,6 +278,12 @@ You should receive a copy of the GNU General Public License along with this prog
 
 
 == Changelog ==
+
+= Version 1.4.3 – October 12, 2024 =
+
++   Fix proper access of WordPress profile using wp.org wp-json api.
++   Fix retrieval of github profile when given as [profile](url).
++   Made transient names more unique using profile source.
 
 = Version 1.4.2 – April 4, 2024 =
 

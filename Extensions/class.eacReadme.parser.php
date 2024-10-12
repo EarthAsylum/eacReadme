@@ -7,7 +7,7 @@
  * @category	WordPress Plugin
  * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
  * @copyright	Copyright (c) 2024 EarthAsylum Consulting <www.earthasylum.com>
- * @version		1.x
+ * @version		24.1012.1
  * @see 		https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/
  * @uses		Parsedown 1.7.4, Copyright (c) 2013-2018 Emanuil Rusev, erusev.com
  * @see 		http://parsedown.org/
@@ -689,6 +689,13 @@ if (! class_exists('eacParseReadme',false))
 						continue;
 					}
 
+					if (preg_match('|(.*)github\.com/(.*)|i', $matches[2], $link))
+					// [display name](http://github.com/profile/)
+					{
+						$profiles = array_merge($profiles,self::_getGithubProfile($link[2],$matches[1]));
+						continue;
+					}
+
 					if (preg_match('|(.*)\.wordpress\.org/(.*)|i', $matches[2], $link))
 					// [display name](http://profiles.wordpress.org/profile/)
 					{
@@ -765,7 +772,8 @@ if (! class_exists('eacParseReadme',false))
 		{
 			$profile = rtrim($profile,'/');
 			// if we're in WordPress, use transient
-			if (function_exists('\get_transient') && ($content = \get_transient("eacReadme_profile_{$profile}"))) {
+			$transient = "eacReadme_gravatar_profile_{$profile}";
+			if (function_exists('\get_transient') && ($content = \get_transient($transient))) {
 				return $content;
 			}
 			// use gravatar profile api in PHP serialized format
@@ -778,7 +786,7 @@ if (! class_exists('eacParseReadme',false))
 						'avatar'		=> $content['entry'][0]['thumbnailUrl']
 				]];
 				if (function_exists('\set_transient')) {
-					\set_transient("eacReadme_profile_{$profile}",$content,DAY_IN_SECONDS);
+					\set_transient($transient,$content,DAY_IN_SECONDS);
 				}
 				return $content;
 			}
@@ -786,6 +794,7 @@ if (! class_exists('eacParseReadme',false))
 			if (!$displayName) list($displayName) = explode('@',$textProfile);
 			return [$textProfile => [
 					'display_name'	=> $displayName,
+					'profile'		=> '',
 					'avatar'		=> "https://secure.gravatar.com/avatar/?d=mp"
 			]];
 		}
@@ -802,7 +811,8 @@ if (! class_exists('eacParseReadme',false))
 		{
 			$profile = rtrim($profile,'/');
 			// if we're in WordPress, use transient
-			if (function_exists('\get_transient') && ($content = \get_transient("eacReadme_profile_{$profile}"))) {
+			$transient = "eacReadme_github_profile_{$profile}";
+			if (function_exists('\get_transient') && ($content = \get_transient($transient))) {
 				return $content;
 			}
 			$context = stream_context_create(array(
@@ -822,14 +832,15 @@ if (! class_exists('eacParseReadme',false))
 						'avatar'		=> $content->avatar_url
 				]];
 				if (function_exists('\set_transient')) {
-					\set_transient("eacReadme_profile_{$profile}",$content,DAY_IN_SECONDS);
+					\set_transient($transient,$content,DAY_IN_SECONDS);
 				}
 				return $content;
 			}
 			// no matching profile
 			return [$profile => [
 					'display_name'	=> $displayName ?: $profile,
-					'avatar'		=> "https://secure.gravatar.com/avatar/?d=mp"
+					'profile'		=> '',
+					'avatar'		=> "https://secure.gravatar.com/avatar/?d=mp",
 			]];
 		}
 
@@ -845,11 +856,26 @@ if (! class_exists('eacParseReadme',false))
 		{
 			$profile = rtrim($profile,'/');
 			// if we're in WordPress, use transient
-			if (function_exists('\get_transient') && ($content = \get_transient("eacReadme_profile_{$profile}"))) {
+			$transient = "eacReadme_wporg_profile_{$profile}";
+			if (function_exists('\get_transient') && ($content = \get_transient($transient))) {
 				return $content;
 			}
-			// get wordpress.org profile page, parse for 'og' tags
-			if ( ($content = @file_get_contents('https://profiles.wordpress.org/'.$profile.'/')) )
+			if ( ($content = @file_get_contents('https://profiles.wordpress.org/wp-json/wporg/v1/users?slug='.$profile))
+			&&   ($content = json_decode($content,true)) )
+			{
+				$content = $content[0];
+				$content = [$profile => [
+						'display_name'	=> $content['name'],
+						'profile'		=> str_replace('/author/','/',$content['link']),
+						'avatar'		=> $content['avatar_urls']['96'],
+				]];
+				if (function_exists('\set_transient')) {
+					\set_transient($transient,$content,DAY_IN_SECONDS);
+				}
+				return $content;
+			}
+			// get wordpress.org profile page (first 64k), parse for 'og' tags
+			if ( ($content = @file_get_contents('https://profiles.wordpress.org/'.$profile.'/',false,null,0,64*1024)) )
 			{
 				$title = $displayName ?: ( (preg_match('/<meta property="og:title" content="(.*) \((.*)\)/i', $content, $matches)) ? $matches[1] : $profile );
 				$url   = (preg_match('/<meta property="og:url" content="(.*)"/i', $content, $matches)) ? $matches[1] : "https://profiles.wordpress.org/{$profile}/";
@@ -861,13 +887,14 @@ if (! class_exists('eacParseReadme',false))
 						'avatar'		=> $image
 				]];
 				if (function_exists('\set_transient')) {
-					\set_transient("eacReadme_profile_{$profile}",$content,DAY_IN_SECONDS);
+					\set_transient($transient,$content,DAY_IN_SECONDS);
 				}
 				return $content;
 			}
 			// no matching profile
 			return [$profile => [
 					'display_name'	=> $displayName ?: $profile,
+					'profile'		=> '',
 					'avatar'		=> "https://secure.gravatar.com/avatar/?d=mp"
 			]];
 		}
