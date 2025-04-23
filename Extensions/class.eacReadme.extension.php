@@ -9,8 +9,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 	 * @category	WordPress Plugin
 	 * @package 	{eac}Readme\{eac}Doojigger Extensions
 	 * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
-	 * @copyright	Copyright (c) 2024 EarthAsylum Consulting <www.EarthAsylum.com>
-	 * @version		1.x
+	 * @copyright	Copyright (c) 2025 EarthAsylum Consulting <www.EarthAsylum.com>
 	 * @link		https://eacDoojigger.earthasylum.com/
 	 * @see 		https://eacDoojigger.earthasylum.com/phpdoc/
 	 * @uses		Parsedown 1.7.4, Copyright (c) 2013-2018 Emanuil Rusev, erusev.com
@@ -24,7 +23,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 		/**
 		 * @var string extension version
 		 */
-		const VERSION	= '24.0202.1';
+		const VERSION	= '25.0419.1';
 
 		/**
 		 * cache lifetime in seconds
@@ -48,15 +47,11 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 				$this->cache_lifetime = EAC_README_CACHE_LIFETIME;
 			}
 
-			if ($this->is_admin())
-			{
-				$this->plugin->rename_option('eacreadme_extension_enabled','readme_extension_enabled');
-				$this->registerExtension( $this->className );
-				// Register plugin options when needed
-				$this->add_action( "options_settings_page", array($this, 'admin_options_settings') );
-				// Add contextual help
-				$this->add_action( 'options_settings_help', array($this, 'admin_options_help') );
-			}
+			$this->registerExtension( $this->className );
+			// Register plugin options when needed
+			$this->add_action( "options_settings_page", array($this, 'admin_options_settings') );
+			// Add contextual help
+			$this->add_action( 'options_settings_help', array($this, 'admin_options_help') );
 		}
 
 
