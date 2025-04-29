@@ -1,8 +1,8 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.4.4
-Last Updated:       19-Apr-2025
+Stable tag:         1.4.5
+Last Updated:       29-Apr-2025
 Requires at least:  5.8
 Tested up to:       6.8
 Requires PHP:       7.4
@@ -278,6 +278,10 @@ You should receive a copy of the GNU General Public License along with this prog
 
 
 == Changelog ==
+
+= Version 1.4.5 – Apr 29, 2025 =
+
++   Don't register until `admin_init`.
 
 = Version 1.4.4 – Apr 19, 2025 =
 

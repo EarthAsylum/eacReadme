@@ -47,11 +47,14 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 				$this->cache_lifetime = EAC_README_CACHE_LIFETIME;
 			}
 
-			$this->registerExtension( $this->className );
-			// Register plugin options when needed
-			$this->add_action( "options_settings_page", array($this, 'admin_options_settings') );
-			// Add contextual help
-			$this->add_action( 'options_settings_help', array($this, 'admin_options_help') );
+			add_action('admin_init', function()
+			{
+				$this->registerExtension( $this->className );
+				// Register plugin options when needed
+				$this->add_action( "options_settings_page", array($this, 'admin_options_settings') );
+				// Add contextual help
+				$this->add_action( 'options_settings_help', array($this, 'admin_options_help') );
+			});
 		}
 
 
