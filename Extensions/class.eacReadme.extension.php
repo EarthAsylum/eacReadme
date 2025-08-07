@@ -23,7 +23,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 		/**
 		 * @var string extension version
 		 */
-		const VERSION	= '25.0419.1';
+		const VERSION	= '25.0807.1';
 
 		/**
 		 * cache lifetime in seconds
@@ -130,12 +130,14 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 							"<details><summary>Shortcode Examples</summary><blockquote>".
 								do_shortcode("[eacReadme]Description/Shortcode Examples[/eacReadme]")."</blockquote></details>" .
 							"<details><summary>Other Options</summary><blockquote>".
-								do_shortcode("[eacReadme]Description/Other Options[/eacReadme]")."</blockquote></details>";
+								do_shortcode("[eacReadme]Description/Other Options[/eacReadme]")."</blockquote></details>" .
+							"<details><summary>Embedding</summary><blockquote>".
+								do_shortcode("[eacReadme]Description/Embedding[/eacReadme]")."</blockquote></details>";
 			}
 			else
 			{
-				$content = 	"{eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks. " .
-							"Enable the extension for shortcode exampled and instructions. ";
+				$content = 	"{eac}Readme loads and translates a WordPress or Github markdown 'readme' file providing shortcodes to access header lines and section blocks. " .
+							"Enable the extension for shortcode examples and instructions. ";
 			}
 
 			$this->addPluginHelpTab('Readme',$content,['{eac}Readme Extension','open']);
@@ -183,9 +185,33 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 			        wp_enqueue_style($scriptId);
 			        wp_enqueue_script($scriptId);
 					// remove indent of code blocks
-					wp_add_inline_style($scriptId, "pre code {padding-left: 0;}");
+					wp_add_inline_style($scriptId, "pre code {padding-left: 0;} img {max-width:100%;}");
 				}, 99 );
 			}
+
+			wp_embed_register_handler(
+				'eacreadme_plugins',
+				'@^'.site_url().'\/plugins\/([a-zA-Z-_0-9/]+)\/([a-zA-Z]+)\.[md|txt]@i',
+				[$this, 'readme_embed_plugins']
+			);
+
+			wp_embed_register_handler(
+				'eacreadme_themes',
+				'@^'.site_url().'\/themes\/([a-zA-Z-_0-9/]+)\/([a-zA-Z]+)\.[md|txt]@i',
+				[$this, 'readme_embed_themes']
+			);
+
+			wp_embed_register_handler(
+				'eacreadme_github',
+				'@^https?:\/\/github\.com\/([a-zA-Z-_0-9/]+)\/([a-zA-Z]+)\.[md|txt]@i',
+				[$this, 'readme_embed_github']
+			);
+
+			wp_embed_register_handler(
+				'eacreadme_wordpress',
+				'@^https?:\/\/(wordpress\.org\/plugins|plugins\.svn\.wordpress\.org|ps\.w\.org)\/([a-zA-Z-_0-9/]+)\/([a-zA-Z]+)\.[md|txt]@i',
+				[$this, 'readme_embed_wordpress']
+			);
 		}
 
 
@@ -203,9 +229,70 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 
 
 		/**
+		 * Embed plugins url
+		 *
+		 * @return	string
+		 */
+		public function readme_embed_plugins( $matches, $attr, $url, $rawattr)
+		{
+			return $this->readme_embed(str_replace(site_url().'/plugins/','',$url),'plugin');
+		}
+
+
+		/**
+		 * Embed themes url
+		 *
+		 * @return	string
+		 */
+		public function readme_embed_themes( $matches, $attr, $url, $rawattr)
+		{
+			return $this->readme_embed(str_replace(site_url().'/themes/','',$url),'theme');
+		}
+
+
+		/**
+		 * Embed Github url
+		 *
+		 * @return	string
+		 */
+		public function readme_embed_github( $matches, $attr, $url, $rawattr)
+		{
+			return $this->readme_embed($url,'github');
+		}
+
+
+		/**
+		 * Embed WP url
+		 *
+		 * @return	string
+		 */
+		public function readme_embed_wordpress( $matches, $attr, $url, $rawattr)
+		{
+			return $this->readme_embed($url,'wpsvn');
+		}
+
+
+		/**
+		 * Embed WP url
+		 *
+		 * @return	string
+		 */
+		public function readme_embed( $url, $key)
+		{
+			global $shortcode_tags;
+			$orig_shortcode_tags = $shortcode_tags;
+			remove_all_shortcodes();
+			$fragment = parse_url($url,PHP_URL_FRAGMENT) ?: 'document';
+			$return = $this->readme_shortcode([$key=>str_replace("#{$fragment}",'',$url)],$fragment);
+			$shortcode_tags = $orig_shortcode_tags;
+			return $return;
+		}
+
+
+		/**
 		 * readme  shortcode function
 		 *
-		 * @return	mixed
+		 * @return	string
 		 */
 		public function readme_shortcode($atts = null, $sections = null, $tag = '' )
 		{
@@ -249,16 +336,16 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 				// /eacreadme/trunk/readme.txt
 				$wpsvn = 'https://ps.w.org/';
 				$parse_file = $current_file = $wpsvn . ltrim(str_replace(
-					[ 'https://', 'http://', 'plugins.svn.wordpress.org', 'ps.w.org' ],
+					[ 'https://', 'http://', 'wordpress.org/plugins', 'plugins.svn.wordpress.org', 'ps.w.org' ],
 					'',
 					$a['wpsvn']
 				),'/');
-				// https://plugins.svn.wordpress.org/eacreadme/trunk/readme.txt
+				// https:/ps.w.org/eacreadme/trunk/readme.txt
 				$file_context = stream_context_create(array(
 					'http'	=> array(
 						'method'	=> 	"GET",
 						'header'	=> 	"Accept: text/plain\r\n".
-										"user-agent: ".filter_input(INPUT_SERVER,'HTTP_USER_AGENT',FILTER_SANITIZE_STRING),
+										"user-agent: ".filter_input(INPUT_SERVER,'HTTP_USER_AGENT',FILTER_DEFAULT),
 					)
 				));
 			}
@@ -267,14 +354,13 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 				// /KBurkholder/eacReadme/main/readme.txt
 				$github = 'https://raw.githubusercontent.com/';
 				$parse_file = $current_file = $github . ltrim(str_replace(
-					[ 'https://', 'http://', 'raw.githubusercontent.com','github.com', '/blob' ],
+					[ 'https://', 'http://', 'raw.githubusercontent.com', 'github.com', '/blob' ],
 					'',
 					$a['github']
 				),'/');
 				// https://raw.githubusercontent.com/KBurkholder/eacReadme/main/readme.txt
 				$token = $a['token'] ?: (defined( 'GITHUB_ACCESS_TOKEN' ) ? GITHUB_ACCESS_TOKEN : null);
 				if ($token) {
-			    //    $parse_file = $current_file = add_query_arg( 'access_token',  , $parse_file );
 			        $file_context = stream_context_create(array(
 						'http'	=> array(
 							'method'	=> "GET",

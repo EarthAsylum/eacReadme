@@ -1,14 +1,15 @@
-## {eac}Doojigger Readme Extension for WordPress  
+## {eac}Doojigger Readme Extension for WordPress
 [![EarthAsylum Consulting](https://img.shields.io/badge/EarthAsylum-Consulting-0?&labelColor=6e9882&color=707070)](https://earthasylum.com/)
 [![WordPress](https://img.shields.io/badge/WordPress-Plugins-grey?logo=wordpress&labelColor=blue)](https://wordpress.org/plugins/search/EarthAsylum/)
 [![eacDoojigger](https://img.shields.io/badge/Requires-%7Beac%7DDoojigger-da821d)](https://eacDoojigger.earthasylum.com/)
+[![Sponsorship](https://img.shields.io/static/v1?label=Sponsorship-shields4message=%E2%9D%A4-shields4logo=GitHub-shields4color=bf3889)](https://github.com/sponsors/EarthAsylum)
 
 <details><summary>Plugin Header</summary>
 
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
-Stable tag:         1.4.5  
-Last Updated:       29-Apr-2025  
+Stable tag:         1.5.0  
+Last Updated:       07-Aug-2025  
 Requires at least:  5.8  
 Tested up to:       6.8  
 Requires PHP:       7.4  
@@ -23,11 +24,11 @@ GitHub URI:         https://github.com/EarthAsylum/eacReadme
 
 </details>
 
-> {eac}Readme loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks.
+> {eac}Readme loads and translates a WordPress markdown 'readme' file providing shortcodes and embedding URLs to access header lines and section blocks.
 
 ### Description
 
-_{eac}Readme_ is an [{eac}Doojigger](https://eacDoojigger.earthasylum.com/) extension which loads and translates a WordPress markdown 'readme.txt' file providing shortcodes to access header lines and section blocks.
+_{eac}Readme_ is an [{eac}Doojigger](https://eacDoojigger.earthasylum.com/) extension which loads and translates a WordPress markdown 'readme' file providing shortcodes and embedding URLs to access header lines and section blocks.
 
 #### Shortcode Usage
 
@@ -38,7 +39,7 @@ The first used shortcode must indicate the file to load...
     [eacReadme plugin='/pluginfolder/readme.txt']   # plugin file is relative to the WordPress plugins folder (wp-content/plugins/)
     [eacReadme theme='/themefolder/readme.txt']     # theme file is relative to the WordPress themes folder (wp-content/themes/)
     [eacReadme wpsvn='/slugname/trunk/readme.txt']  # load file from WordPress SVN repository
-    [eacReadme github='/owner/repository/main/readme.txt']        # load file from github repository
+    [eacReadme github='/owner/repository/main/readme.txt']      # load file from a github repository
 
 After which, headers and sections may be pulled from that file...
 
@@ -140,6 +141,43 @@ Default translation table
         'Screenshots'           => 'Screen Shots',
     ];
 
+#### Embedding
+
+{eac}Readme can also be used to embed URLs in a WordPress Post or Page. Simply paste the url in the `Embed` URL block.
+
++	Navigate to the post or page where the readme content is to be embedded.
++	Click the '+' (Block Inserter) icon and search for "Embed" or type /embed.
++	Select the "Embed" block.
++	Paste the URL to the readme file into the provided field.
++	Click the "Embed" button. WordPress will automatically display the unformatted content.
+
+![Embedding](https://ps.w.org/eacreadme/assets/embed-block.png)
+
+The shortcut to this is to simply paste the URL at the end of the page/post where it says "Type / to choose a block". WordPress will automatically convert your URL to an embed block.
+
+Files can be embedded from your site, from the WordPress repository or from Github. Embedded URLs are transformed internally to the appropriate format.
+
+*From your site*
+
+	https://<your_site_url>/plugins/<plugin_slug>/readme.txt
+	https://<your_site_url>/themes/<theme_name>/readme.txt
+
+*From the Wordpress Repository*
+
+	https://ps.w.org/<plugin_slug>/readme.txt
+	https://plugins.svn.wordpress.org/<plugin_slug>/readme.txt
+
+*From a GitHub Repository*
+
+	https://github.com/<owner>/<repository>/blob/main/readme.md
+	https://github.com/<owner>/<repository>/main/readme.md
+
+*To load only specific sections of the readme file, append a fragment to the url:*
+
+	https://<your_site_url>/plugins/<plugin_slug>/readme.txt#allheaders
+	https://ps.w.org/<plugin_slug>/readme.txt#description
+	https://github.com/<owner>/<repository>/main/readme.md#screenshots
+
 #### Readme Format
 
 {eac}Readme expects a well-formed readme.txt file that follows the [WordPress readme file standard](https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works)...
@@ -150,7 +188,7 @@ Default translation table
     short Description
     == section ==
     = sub-section =
-    
+
 ...but supports some extensions to that standard:
 
 +   Author & Author URI
@@ -205,7 +243,7 @@ When retrieving the header block with ...
 Or when retrieving all sections with ...
 
 `[eacReadme]All Sections[/eacReadme]` or `\eacParseReadme::getAllSections()`
-    
+
 Or when retrieving the entire document with ...
 
 `[eacReadme]Document[/eacReadme]` or `\eacParseReadme::getDocument()`
@@ -274,4 +312,15 @@ Once installed and activated options for this extension will show in the 'Genera
 +   {eac}Readme uses [Prism syntax highlighter](https://prismjs.com/), Copyright (c) 2012 Lea Verou
 
 +   The [{eac}SoftwareRegistry Software Product Taxonomy](https://swregistry.earthasylum.com/software-taxonomy/) plugin uses {eac}Readme to parse readme markdown files hosted on Github to provide plugin information and automated updates to WordPress for self-hosted plugins.
+
+### Copyright
+
+#### Copyright © 2019-2025, EarthAsylum Consulting, distributed under the terms of the GNU GPL.
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.  
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should receive a copy of the GNU General Public License along with this program. If not, see [https://www.gnu.org/licenses/](https://www.gnu.org/licenses/).
+
 
