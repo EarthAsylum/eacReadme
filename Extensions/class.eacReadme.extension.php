@@ -23,7 +23,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 		/**
 		 * @var string extension version
 		 */
-		const VERSION	= '25.0807.1';
+		const VERSION	= '25.0808.1';
 
 		/**
 		 * cache lifetime in seconds
@@ -191,25 +191,25 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 
 			wp_embed_register_handler(
 				'eacreadme_plugins',
-				'@^'.site_url().'\/plugins\/([a-zA-Z-_0-9/]+)\/([a-zA-Z]+)\.[md|txt]@i',
+				'@^'.site_url().'\/plugins\/([a-zA-Z-_0-9/]+)\/(.*)\.[md|txt]@i',
 				[$this, 'readme_embed_plugins']
 			);
 
 			wp_embed_register_handler(
 				'eacreadme_themes',
-				'@^'.site_url().'\/themes\/([a-zA-Z-_0-9/]+)\/([a-zA-Z]+)\.[md|txt]@i',
+				'@^'.site_url().'\/themes\/([a-zA-Z-_0-9/]+)\/(.*)\.[md|txt]@i',
 				[$this, 'readme_embed_themes']
 			);
 
 			wp_embed_register_handler(
 				'eacreadme_github',
-				'@^https?:\/\/github\.com\/([a-zA-Z-_0-9/]+)\/([a-zA-Z]+)\.[md|txt]@i',
+				'@^https?:\/\/github\.com\/([a-zA-Z-_0-9/]+)\/(.*)\.[md|txt]@i',
 				[$this, 'readme_embed_github']
 			);
 
 			wp_embed_register_handler(
 				'eacreadme_wordpress',
-				'@^https?:\/\/(wordpress\.org\/plugins|plugins\.svn\.wordpress\.org|ps\.w\.org)\/([a-zA-Z-_0-9/]+)\/([a-zA-Z]+)\.[md|txt]@i',
+				'@^https?:\/\/(wordpress\.org\/plugins|plugins\.svn\.wordpress\.org|ps\.w\.org)\/([a-zA-Z-_0-9/]+)\/(.*)\.[md|txt]@i',
 				[$this, 'readme_embed_wordpress']
 			);
 		}
@@ -273,19 +273,15 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 
 
 		/**
-		 * Embed WP url
+		 * Embed url
 		 *
 		 * @return	string
 		 */
 		public function readme_embed( $url, $key)
 		{
-			global $shortcode_tags;
-			$orig_shortcode_tags = $shortcode_tags;
-			remove_all_shortcodes();
+		//	\remove_shortcode('eacReadme');
 			$fragment = parse_url($url,PHP_URL_FRAGMENT) ?: 'document';
-			$return = $this->readme_shortcode([$key=>str_replace("#{$fragment}",'',$url)],$fragment);
-			$shortcode_tags = $orig_shortcode_tags;
-			return $return;
+			return $this->readme_shortcode([$key=>str_replace("#{$fragment}",'',$url)],$fragment);
 		}
 
 
@@ -358,6 +354,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 					'',
 					$a['github']
 				),'/');
+
 				// https://raw.githubusercontent.com/KBurkholder/eacReadme/main/readme.txt
 				$token = $a['token'] ?: (defined( 'GITHUB_ACCESS_TOKEN' ) ? GITHUB_ACCESS_TOKEN : null);
 				if ($token) {

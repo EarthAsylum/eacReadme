@@ -1,8 +1,8 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.5.0
-Last Updated:       07-Aug-2025
+Stable tag:         1.5.1
+Last Updated:       08-Aug-2025
 Requires at least:  5.8
 Tested up to:       6.8
 Requires PHP:       7.4
@@ -316,6 +316,11 @@ You should receive a copy of the GNU General Public License along with this prog
 
 
 == Changelog ==
+
+= Version 1.5.1 – August 8, 2025 =
+
++   Remove ineffective shortcode circumvention.
++	Expanded allowed file name regex for embedding.
 
 = Version 1.5.0 – August 7, 2025 =
 
