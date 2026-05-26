@@ -7,20 +7,20 @@ namespace EarthAsylumConsulting;
  * @category	WordPress Plugin
  * @package		{eac}Readme\{eac}Doojigger Extensions
  * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
- * @copyright	Copyright (c) 2025 EarthAsylum Consulting <www.earthasylum.com>
+ * @copyright	Copyright (c) 2026 EarthAsylum Consulting <www.earthasylum.com>
  * @link		https://eacDoojigger.earthasylum.com/
  * @see			https://eacDoojigger.earthasylum.com/phpdoc/
- * @uses		Parsedown 1.7.4, Copyright (c) 2013-2018 Emanuil Rusev, erusev.com
+ * @uses		Parsedown 1.8.0, Copyright (c) Emanuil Rusev, erusev.com
  * @see			http://parsedown.org/
- * @uses		Prism 1.27, Copyright (c) 2012 Lea Verou
+ * @uses		Prism 1.30, Copyright (c) Lea Verou
  * @see			https://prismjs.com/
  *
  * @wordpress-plugin
  * Plugin Name:			{eac}Readme
  * Description:			{eac}Readme loads and translates a WordPress readme.txt file providing shortcodes to access header lines, section blocks, or the entire document.
- * Version:				1.5.1
+ * Version:				1.5.2
  * Requires at least:	5.8
- * Tested up to:		6.8
+ * Tested up to:		7.0
  * Requires PHP:		7.4
  * Plugin URI:			https://eacdoojigger.earthasylum.com/eacreadme/
  * Author:				EarthAsylum Consulting

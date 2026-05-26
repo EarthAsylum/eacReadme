@@ -1,10 +1,10 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.5.1
-Last Updated:       08-Aug-2025
+Stable tag:         1.5.2
+Last Updated:       26-May-2026
 Requires at least:  5.8
-Tested up to:       6.8
+Tested up to:       7.0
 Requires PHP:       7.4
 Requires EAC:       3.0
 Contributors:       kevinburkholder
@@ -299,14 +299,14 @@ Once installed and activated options for this extension will show in the 'Genera
 = Additional Information =
 
 +   {eac}Readme is an extension plugin to and requires installation and registration of [{eac}Doojigger](https://eacDoojigger.earthasylum.com/).
-+   {eac}Readme uses [Parsedown 1.7.4](http://parsedown.org/), Copyright (c) 2013-2018 [Emanuil Rusev](erusev.com)
++   {eac}Readme uses [Parsedown 1.8.0](http://parsedown.org/), Copyright (c) [Emanuil Rusev](erusev.com)
 +   {eac}Readme uses [Prism syntax highlighter](https://prismjs.com/), Copyright (c) 2012 Lea Verou
 
 +   The [{eac}SoftwareRegistry Software Product Taxonomy](https://swregistry.earthasylum.com/software-taxonomy/) plugin uses {eac}Readme to parse readme markdown files hosted on Github to provide plugin information and automated updates to WordPress for self-hosted plugins.
 
 == Copyright ==
 
-= Copyright © 2019-2025, EarthAsylum Consulting, distributed under the terms of the GNU GPL. =
+= Copyright © 2026, EarthAsylum Consulting, distributed under the terms of the GNU GPL. =
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -316,6 +316,11 @@ You should receive a copy of the GNU General Public License along with this prog
 
 
 == Changelog ==
+
+= Version 1.5.2 – May 26, 2026 =
+
++   Compatible with WordPress 7.0.
++	Updated Parsedown to version 1.8.0.
 
 = Version 1.5.1 – August 8, 2025 =
 

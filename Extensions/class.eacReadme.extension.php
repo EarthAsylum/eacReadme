@@ -9,12 +9,12 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 	 * @category	WordPress Plugin
 	 * @package 	{eac}Readme\{eac}Doojigger Extensions
 	 * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
-	 * @copyright	Copyright (c) 2025 EarthAsylum Consulting <www.EarthAsylum.com>
+	 * @copyright	Copyright (c) 2026 EarthAsylum Consulting <www.EarthAsylum.com>
 	 * @link		https://eacDoojigger.earthasylum.com/
 	 * @see 		https://eacDoojigger.earthasylum.com/phpdoc/
-	 * @uses		Parsedown 1.7.4, Copyright (c) 2013-2018 Emanuil Rusev, erusev.com
-	 * @see 		http://parsedown.org/
-	 * @uses 		Prism 1.27, Copyright (c) 2012 Lea Verou
+	 * @uses		Parsedown 1.8.0, Copyright (c) Emanuil Rusev, erusev.com
+	 * @see			http://parsedown.org/
+	 * @uses		Prism 1.30, Copyright (c) Lea Verou
 	 * @see			https://prismjs.com/
 	 */
 
@@ -23,7 +23,7 @@ if (! class_exists(__NAMESPACE__.'\readme_extension', false) )
 		/**
 		 * @var string extension version
 		 */
-		const VERSION	= '25.0808.1';
+		const VERSION	= '26.0526.1';
 
 		/**
 		 * cache lifetime in seconds

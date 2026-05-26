@@ -6,17 +6,17 @@
  *
  * @category	WordPress Plugin
  * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
- * @copyright	Copyright (c) 2024 EarthAsylum Consulting <www.earthasylum.com>
- * @version		24.1012.1
+ * @copyright	Copyright (c) 2026 EarthAsylum Consulting <www.earthasylum.com>
+ * @version		26.0526.1
  * @see 		https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/
- * @uses		Parsedown 1.7.4, Copyright (c) 2013-2018 Emanuil Rusev, erusev.com
+ * @uses		Parsedown 1.8.0, Copyright (c) Emanuil Rusev, erusev.com
  * @see 		http://parsedown.org/
  */
 
 
 if (! class_exists('Parsedown',false))
 {
-	require 'vendor/parsedown-1.7.4/Parsedown.php';
+	require 'vendor/parsedown-1.8.0/Parsedown.php';
 }
 
 /*
