@@ -14,7 +14,6 @@ jobs:
       uses: 10up/action-wordpress-plugin-deploy@stable
       with:
         dry-run: true
-    #    generate-zip: true
       env:
         SLUG: eacreadme
         ASSETS_DIR: .wp-assets
