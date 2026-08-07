@@ -7,7 +7,7 @@
  * @category	WordPress Plugin
  * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
  * @copyright	Copyright (c) 2026 EarthAsylum Consulting <www.earthasylum.com>
- * @version		26.0526.1
+ * @version		26.0807.1
  * @see 		https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/
  * @uses		Parsedown 1.8.0, Copyright (c) Emanuil Rusev, erusev.com
  * @see 		http://parsedown.org/
@@ -16,7 +16,7 @@
 
 if (! class_exists('Parsedown',false))
 {
-	require 'vendor/parsedown-1.8.0/Parsedown.php';
+	require 'vendor/parsedown/Parsedown.php';
 }
 
 /*

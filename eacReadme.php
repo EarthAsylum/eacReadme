@@ -18,10 +18,10 @@ namespace EarthAsylumConsulting;
  * @wordpress-plugin
  * Plugin Name:			{eac}Readme
  * Description:			{eac}Readme loads and translates a WordPress readme.txt file providing shortcodes to access header lines, section blocks, or the entire document.
- * Version:				1.5.2
+ * Version:				1.5.3
  * Requires at least:	5.8
  * Tested up to:		7.0
- * Requires PHP:		7.4
+ * Requires PHP:		8.1
  * Plugin URI:			https://eacdoojigger.earthasylum.com/eacreadme/
  * Author:				EarthAsylum Consulting
  * Author URI:			http://www.earthasylum.com
