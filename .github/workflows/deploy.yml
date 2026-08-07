@@ -10,10 +10,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
+    - name: Checkout-Code
       uses: actions/checkout@v4
 
-    - name: WordPress Plugin Deploy
+    - name: WordPress-Plugin-Deploy
       uses: 10up/action-wordpress-plugin-deploy@stable
       with:
         generate-zip: true
@@ -22,9 +22,10 @@ jobs:
         ASSETS_DIR: .wp-assets
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+
     # After the deploy, we also want to create a zip and upload it to the release on Github. We don't want
     # users to have to go to the repository to find our plugin :).
-    - name: Upload release asset
+    - name: Upload-Release-Asset
       uses: softprops/action-gh-release@v2
       env:
         # Note, this is an exception to action secrets: GH_TOKEN is always available and provides access to
@@ -32,5 +33,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         # Provide what the file should be named when attached to the release (plugin-name.zip)
-        files: ${{ github.workspace }}/${{ env.PLUGIN }}
+        files: ${{ steps.WordPress-Plugin-Deploy.outputs.zip-path }}
+        # ${{ github.workspace }}/${{ env.PLUGIN }}.zip
         # ${{ github.event.repository.name }}.zip
