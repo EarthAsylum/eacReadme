@@ -46,12 +46,12 @@ jobs:
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
 
-    - name: Rename-ZIP
-      # rename zip file
+    - name: Rename-Zip
+      # rename zip file with version
       run: mv ${SLUG}.zip ${SLUG}.{VERSION}.zip
 
     - name: Upload-Release-Asset
-      # Upload {plugin-name}.zip to github release
+      # Upload {plugin-name}.{version}.zip to github release
       uses: softprops/action-gh-release@v3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
