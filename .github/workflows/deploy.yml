@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Plugin-Slug
-        run: |
-            echo "PLUGIN=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+      run: |
+        echo "PLUGIN=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
     - name: Checkout-Code
       uses: actions/checkout@v7
-    - name: WordPress-Plugin-Deploy
+    - name: WordPress-Deploy
       uses: 10up/action-wordpress-plugin-deploy@stable
       with:
         generate-zip: true
