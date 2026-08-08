@@ -48,7 +48,7 @@ jobs:
 
     - name: Rename-ZIP
       # rename zip file
-        run: mv ${{ env.SLUG }}.zip ${{ env.SLUG }}.{{ env.VERSION }}.zip
+      run: mv ${SLUG}.zip ${SLUG}.{VERSION}.zip
 
     - name: Upload-Release-Asset
       # Upload {plugin-name}.zip to github release
