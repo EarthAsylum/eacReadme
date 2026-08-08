@@ -3,16 +3,14 @@ on:
   release:
     types: [released]
 
-env:
-    PLUGIN: eacreadme
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Plugin-Slug
+        run: echo "PLUGIN=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
     - name: Checkout-Code
-      uses: actions/checkout@v4
-
+      uses: actions/checkout@v7
     - name: WordPress-Plugin-Deploy
       uses: 10up/action-wordpress-plugin-deploy@stable
       with:
@@ -26,7 +24,7 @@ jobs:
     # After the deploy, we also want to create a zip and upload it to the release on Github. We don't want
     # users to have to go to the repository to find our plugin :).
     - name: Upload-Release-Asset
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       env:
         # Note, this is an exception to action secrets: GH_TOKEN is always available and provides access to
         # the current repository this action runs in.
