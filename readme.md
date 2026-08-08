@@ -9,7 +9,7 @@
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
 Stable tag:         1.5.3  
-Last Updated:       07-Aug-2026  
+Last Updated:       08-Aug-2026  
 Requires at least:  5.8  
 Tested up to:       7.0  
 Requires PHP:       8.1  
@@ -182,12 +182,14 @@ Files can be embedded from your site, from the WordPress repository or from Gith
 
 {eac}Readme expects a well-formed readme.txt file that follows the [WordPress readme file standard](https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works)...
 
+```
     === title ===
     header: value  
     header: value  
     short Description
     == section ==
     = sub-section =
+```
 
 ...but supports some extensions to that standard:
 
@@ -255,6 +257,7 @@ Additional html tags and classes are added, including wrapping blocks within a `
 
 3rd-party actors may load and use the parser class included in {eac}Readme...
 
+```
         do_action('eacReadme_load_parser');     // loads \eacParseReadme static class
         if (class_exists('\eacParseReadme'))
         {
@@ -265,7 +268,7 @@ Additional html tags and classes are added, including wrapping blocks within a `
             $donations      = \eacParseReadme::getHeader('donate_link');
             $description    = \eacParseReadme::getSection('description');
         }
-
+```
 
 ### Installation
 
