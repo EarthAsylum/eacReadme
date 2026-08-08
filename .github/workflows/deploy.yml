@@ -10,30 +10,31 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+
     - name: Plugin-Slug
+      # convert REPO_NAME to lower case as SLUG used by deploy
       run: |
-        echo "PLUGIN=${REPO_NAME,,}" >>${GITHUB_ENV}
+        echo "SLUG=${REPO_NAME,,}" >>${GITHUB_ENV}
+
     - name: Checkout-Code
+      # checkout the repository code
       uses: actions/checkout@v7
+
     - name: WordPress-Deploy
+      # deploy to WordPress, creating a WP installable .zip
       uses: 10up/action-wordpress-plugin-deploy@stable
       with:
         generate-zip: true
       env:
-        SLUG: ${{ env.PLUGIN }}
         ASSETS_DIR: .wp-assets
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
 
-    # After the deploy, we also want to create a zip and upload it to the release on Github. We don't want
-    # users to have to go to the repository to find our plugin :).
     - name: Upload-Release-Asset
+      # Upload {plugin-name}.zip to github release
       uses: softprops/action-gh-release@v3
       env:
-        # Note, this is an exception to action secrets: GH_TOKEN is always available and provides access to
-        # the current repository this action runs in.
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        # Provide what the file should be named when attached to the release (plugin-name.zip)
-        files: ${{ github.workspace }}/${{ env.PLUGIN }}.zip
+        files: ${{ github.workspace }}/${{ env.SLUG }}.zip
         # ${{ github.event.repository.name }}.zip
