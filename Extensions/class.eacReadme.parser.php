@@ -7,7 +7,7 @@
  * @category	WordPress Plugin
  * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
  * @copyright	Copyright (c) 2026 EarthAsylum Consulting <www.earthasylum.com>
- * @version		26.0807.1
+ * @version		26.0830.1
  * @see 		https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/
  * @uses		Parsedown 1.8.0, Copyright (c) Emanuil Rusev, erusev.com
  * @see 		http://parsedown.org/
@@ -606,11 +606,13 @@ if (! class_exists('eacParseReadme',false))
 		 */
 		public static function getAuthor(): string
 		{
-			if ( ($authorUri = self::getHeader('Author URI')) && ($author = self::getHeader('Author Name')) )
+			$author = self::getHeader('Author') ?: self::getHeader('Author Name');
+
+			if ( ($authorUri = self::getHeader('Author URI')) && ($author) )
 			{
 				return self::parseMarkdownLine("[{$author}]({$authorUri})");
 			}
-			return self::getHeader('Author',true);
+			return self::parseMarkdownLine($author);
 		}
 
 

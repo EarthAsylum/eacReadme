@@ -1,13 +1,13 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.5.3
-Last Updated:       08-Aug-2026
+Stable tag:         1.5.4
+Last Updated:       08-Sep-2026
 Requires at least:  5.8
 Tested up to:       7.1
 Requires PHP:       8.1
 Requires EAC:       3.0
-Contributors:       kevinburkholder
+Contributors:       KevinBurkholder
 Donate link:        https://github.com/sponsors/EarthAsylum
 License:            GPLv3 or later
 License URI:        https://www.gnu.org/licenses/gpl.html
@@ -319,6 +319,15 @@ You should receive a copy of the GNU General Public License along with this prog
 
 
 == Changelog ==
+
+= Version 1.5.4 – September 8, 2026 =
+
++   Compatible with WordPress 7.1.
++	Admin notification on missing required plugin.
++	Aesthetic/Nonstructural changes...
+	+	WP plugins page links.
+	+	Plugin DocBlocks, readme headers, etc.
++	Fixed getAuthor() to use either 'Author' or 'Author Name' with/without 'Author URI'.
 
 = Version 1.5.3 – August 8, 2026 =
 

@@ -8,13 +8,13 @@
 
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/  
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)  
-Stable tag:         1.5.3  
-Last Updated:       08-Aug-2026  
+Stable tag:         1.5.4  
+Last Updated:       08-Sep-2026  
 Requires at least:  5.8  
 Tested up to:       7.1  
 Requires PHP:       8.1  
 Requires EAC:       3.0  
-Contributors:       [kevinburkholder](https://profiles.wordpress.org/kevinburkholder)  
+Contributors:       [KevinBurkholder](https://profiles.wordpress.org/KevinBurkholder)  
 Donate link:        https://github.com/sponsors/EarthAsylum  
 License:            GPLv3 or later  
 License URI:        https://www.gnu.org/licenses/gpl.html  
