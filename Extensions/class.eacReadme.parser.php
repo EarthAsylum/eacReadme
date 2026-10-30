@@ -7,7 +7,7 @@
  * @category	WordPress Plugin
  * @author		Kevin Burkholder <KBurkholder@EarthAsylum.com>
  * @copyright	Copyright (c) 2026 EarthAsylum Consulting <www.earthasylum.com>
- * @version		26.0830.1
+ * @version		26.1026.1
  * @see 		https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/
  * @uses		Parsedown 1.8.0, Copyright (c) Emanuil Rusev, erusev.com
  * @see 		http://parsedown.org/
@@ -770,7 +770,7 @@ if (! class_exists('eacParseReadme',false))
 		 * @param string 	$displayName - display name (if provided)
 		 * @return array	profile content
 		 */
-		private static function _getGravatarProfile(string $profile, string $textProfile, string $displayName=null): array
+		private static function _getGravatarProfile(string $profile, string $textProfile, ?string $displayName=null): array
 		{
 			$profile = rtrim($profile,'/');
 			// if we're in WordPress, use transient
@@ -809,7 +809,7 @@ if (! class_exists('eacParseReadme',false))
 		 * @param string 	$displayName - display name (if provided)
 		 * @return array	profile content
 		 */
-		private static function _getGithubProfile(string $profile, string $displayName=null): array
+		private static function _getGithubProfile(string $profile, ?string $displayName=null): array
 		{
 			$profile = rtrim($profile,'/');
 			// if we're in WordPress, use transient
@@ -854,7 +854,7 @@ if (! class_exists('eacParseReadme',false))
 		 * @param string 	$displayName - display name (if provided)
 		 * @return array	profile content
 		 */
-		private static function _getWordpressProfile(string $profile, string $displayName=null): array
+		private static function _getWordpressProfile(string $profile, ?string $displayName=null): array
 		{
 			$profile = rtrim($profile,'/');
 			// if we're in WordPress, use transient

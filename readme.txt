@@ -1,11 +1,11 @@
 === {eac}Doojigger Readme Extension for WordPress ===
 Plugin URI:         https://eacdoojigger.earthasylum.com/eacreadme/
 Author:             [EarthAsylum Consulting](https://www.earthasylum.com)
-Stable tag:         1.5.4
-Last Updated:       08-Sep-2026
+Stable tag:         1.5.5
+Last Updated:       26-Oct-2026
 Requires at least:  5.8
 Tested up to:       7.1
-Requires PHP:       8.1
+Requires PHP:       8.2
 Requires EAC:       3.0
 Contributors:       KevinBurkholder
 Donate link:        https://github.com/sponsors/EarthAsylum
@@ -319,6 +319,12 @@ You should receive a copy of the GNU General Public License along with this prog
 
 
 == Changelog ==
+
+= Version 1.5.5 – October 26, 2026 =
+
++	Fixed `Implicitly marking parameter as nullable`.
++	Added `dependency.php`.
++	Requires PHP 8.2.
 
 = Version 1.5.4 – September 8, 2026 =
 

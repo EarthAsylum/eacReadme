@@ -19,10 +19,10 @@ namespace EarthAsylumConsulting;
  * @wordpress-plugin
  * Plugin Name:			{eac}Readme
  * Description:			{eac}Readme loads and translates a WordPress readme.txt file providing shortcodes to access header lines, section blocks, or the entire document.
- * Version:				1.5.4
+ * Version:				1.5.5
  * Requires at least:	5.8
  * Tested up to:		7.1
- * Requires PHP:		8.1
+ * Requires PHP:		8.2
  * Plugin URI:			https://eacdoojigger.earthasylum.com/eacreadme/
  * Author:				EarthAsylum Consulting
  * Author URI:			http://www.earthasylum.com
@@ -32,14 +32,13 @@ namespace EarthAsylumConsulting;
 
 if (!defined('EACDOOJIGGER_VERSION'))
 {
-	\add_action( 'admin_notices', function()
-		{
-			echo '<div class="notice notice-error is-dismissible">'.
-				 '<em>{eac}Readme</em> requires installation & activation of '.
-				 '<a href="https://eacdoojigger.earthasylum.com/eacdoojigger" target="_blank">'.
-				 '{eac}Doojigger</a>.</div>';
-		}
-	);
+	require_once 'dependency.php';
+	return dependency::notice([
+		'plugin'	=>	[ '{eac}Readme' 		=> plugin_basename( __FILE__ ) ],
+		'requires'	=> 	[ '{eac}Doojigger' 		=> 'eacDoojigger/eacDoojigger.php' ],
+		'manifest'	=> 'https://eacdoojigger.earthasylum.com/software-updates/eacdoojigger.json',
+		'after'		=> self_admin_url('/admin.php?page=eacdoojigger-settings&tab=registration')
+	]);
 	return;
 }
 
